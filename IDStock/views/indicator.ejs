@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<script src="/javascripts/macal.js"></script>
+<script src="/javascripts/sorttable.js"></script>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body onload="calChange()">
+<%include templates/header.ejs%>
+<h1>Welcome to IDCloud Stock!</h1>
+<br><input type="date" id="inputCalDate" onchange="calChange()" value="<%=yesterday%>"></br>
+<table id="tab_companies" class="sortable">
+    <thead>
+    <tr>
+        <td>Symbol</td>
+        <td>Name</td>
+        <td>Market Cap(B)</td>
+        <td>Sector</td>
+        <td>Industry</td>
+        <td>magather_date</td>
+        <td>magather_price</td>
+        <td>ma5</td>
+        <td>ma10</td>
+        <td>ma20</td>
+        <td>ma60</td>
+        <td>ma200</td>
+    </tr>
+    </thead>
+    <tbody id="tab_companies_body">
+    <% companyList.forEach(function(oneCompany){ %>
+    <tr id="<%= oneCompany.symbol %>" style="display:none">
+        <td><a href="https://www.google.com/finance?q=<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.symbol %></a></td>
+        <td><%= oneCompany.name %></td>
+        <td><%= oneCompany.market_cap %></td>
+        <td><%= oneCompany.sector %></td>
+        <td><%= oneCompany.industry %></td>
+        <td name="td_maDate"><%= oneCompany.magather_date %></td>
+        <td><a href="https://www.tradingview.com/chart/?symbol=<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.magather_price %></a></td>
+        <td><%= oneCompany.ma5 %></td>
+        <td><%= oneCompany.ma10 %></td>
+        <td><%= oneCompany.ma20 %></td>
+        <td><%= oneCompany.ma60 %></td>
+        <td><%= oneCompany.ma200 %></td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+</body>
+</html>

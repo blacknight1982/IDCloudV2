@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<script src="/javascripts/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/javascripts/chart.js"></script>
+<html>
+  <head>
+    <title><%=title%></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  	<%include templates/header.ejs%>
+    <h1><%=title%></h1>
+    
+    <table>
+    	
+    	<tr>
+    		<td>
+    			 <label for="fromDate">From Date:</label>
+    		</td>
+    		<td>
+    			 <input type="date" id="fromDate" value ="getOneYearAgoString()" onchange="drawchart()">
+    		</td>
+    	</tr>
+    	
+    	<tr>
+    		<td>
+    			 <label for="toDate">To Date:</label>
+    		</td>
+    		<td>
+    			 <input type="date" id="toDate" value="<%=(new Date()).toLocaleDateString()%>" onchange="drawchart()">
+    		</td>
+    	</tr>
+    	
+    	<tr>
+    		<td>
+    			 <label for="symbol">Symbol:</label>
+    		</td>
+    		<td>
+    			 <select id="symbolSelect" onchange="drawchart()">
+    			 	  <option value=""></option>
+    			 	<% etfs.forEach(function(oneETF){ %>
+					  <option value="<%= oneETF.symbol %>"><%= oneETF.symbol %></option>
+					<% }); %>
+				</select>
+    		</td>
+    	</tr>
+    	
+    <table>
+    <p>
+    	<div id="result"></div>
+    	<div id="chart_div"></div>
+    	<div id="chart2_div"></div>
+    </p>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<script src="/javascripts/earningcal.js"></script>
+<script src="/javascripts/sorttable.js"></script>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body onload="calChange()">
+<%include templates/header.ejs%>
+<table>
+	<td>
+		Please enter a date in the future:
+	</td>
+	<td>
+		<input type="date" id="inputCalDate" onchange="calChange()" value="<%=(new Date()).toLocaleDateString()%>">
+	</td>
+</table>
+
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<table id="tab_companies" class="sortable">
+    <thead>
+    <tr>
+        <td>Symbol</td>
+        <td>Name</td>
+        <td>Market Cap(M)</td>
+        <td>Sector</td>
+        <td>Industry</td>
+        <td>Current Share Price</td>
+        <td>ER Date</td>
+        <td>ER Time</td>
+    </tr>
+    </thead>
+    <tbody id="tab_companies_body">
+    <% companyList.forEach(function(oneCompany){ %>
+    <tr id="<%= oneCompany.symbol %>" style="display:none">
+        <td><a href="https://www.google.com/finance/option_chain?q=<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.symbol %></a></td>
+        <td><%= oneCompany.name %></td>
+        <td name="td_marketCap"><%= oneCompany.market_cap %></td>
+        <td><%= oneCompany.sector %></td>
+        <td><%= oneCompany.industry %></td>
+        <td name="td_currentPrice"><%= oneCompany.price %></td>
+        <td name="td_erDate"><%= oneCompany.erdate %></td>
+        <td name="td_erTime"><a href="http://www.nasdaq.com/earnings/report/<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.erdetails %></td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+</body>
+</html>

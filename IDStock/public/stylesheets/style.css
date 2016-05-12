@@ -1,0 +1,22 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+nav {
+  padding-bottom: 25px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+table, th, td{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+
+table #tab_companies{
+  width: 100%;
+}

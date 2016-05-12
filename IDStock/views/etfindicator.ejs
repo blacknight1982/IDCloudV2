@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<script src="/javascripts/macal.js"></script>
+<script src="/javascripts/sorttable.js"></script>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body onload="calChange()">
+<%include templates/header.ejs%>
+<h1>Welcome to IDCloud Stock!</h1>
+<br><input type="date" id="inputCalDate" onchange="calChange()" value="<%=yesterday%>"></br>
+<table id="tab_companies" class="sortable">
+    <thead>
+    <tr>
+        <td>Symbol</td>
+        <td>Name</td>
+        <td>Assets</td>
+        <td>Volume</td>
+        <td>magather_date</td>
+        <td>magather_price</td>
+        <td>ma5</td>
+        <td>ma10</td>
+        <td>ma20</td>
+        <td>ma60</td>
+    </tr>
+    </thead>
+    <tbody id="tab_companies_body">
+    <% etfList.forEach(function(oneETF){ %>
+    <tr id="<%= oneETF.symbol %>" style="display:none">
+        <td><a href="https://www.google.com/finance?q=<%= oneETF.symbol %>" target="_blank"><%= oneETF.symbol %></a></td>
+        <td><%= oneETF.name %></td>
+        <td><%= oneETF.assets %></td>
+        <td><%= oneETF.avg_vol %></td>
+        <td name="td_maDate"><%= oneETF.magather_date %></td>
+        <td><a href="https://www.tradingview.com/chart/?symbol=<%= oneETF.symbol %>" target="_blank"><%= oneETF.magather_price %></a></td>
+        <td><%= oneETF.ma5 %></td>
+        <td><%= oneETF.ma10 %></td>
+        <td><%= oneETF.ma20 %></td>
+        <td><%= oneETF.ma60 %></td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+</body>
+</html>
