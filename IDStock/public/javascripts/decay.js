@@ -18,7 +18,7 @@ function drawchart(){
 		 $.ajax({
 	         type: 'POST',
 	         data: postData,
-	         url: '/chart',
+	         url: '/decay',
 	         dataType: 'JSON'
 	     }).done(function(response) {
 	    	 
@@ -75,11 +75,44 @@ function drawLogScales(response) {
           };
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
     var chart2 = new google.visualization.LineChart(document.getElementById('chart2_div'));
+    
+    google.visualization.events.addListener(chart, 'select', chart1Selection);
+    google.visualization.events.addListener(chart2, 'select', chart2Selection);
+    
+    function chart1Selection(){
+        var selectedItem = chart.getSelection();
+        var row = selectedItem[0].row;
+        var col = selectedItem[0].column;
+        
+        if ($('input[name="chartRadio"]:checked').val() === 'fromDateRadio') {
+        	$('#fromDate').val(data1.getFormattedValue(selectedItem[0].row,0));
+        }
+        else{
+        	$('#toDate').val(data1.getFormattedValue(selectedItem[0].row,0));
+        }
+        drawchart();
+        
+      }
+    
+    function chart2Selection(){
+        var selectedItem = chart2.getSelection();
+        var row = selectedItem[0].row;
+        var col = selectedItem[0].column;
+        if ($('input[name="chartRadio"]:checked').val() === 'fromDateRadio') {
+        	$('#fromDate').val(data1.getFormattedValue(selectedItem[0].row,0));
+        }
+        else{
+        	$('#toDate').val(data1.getFormattedValue(selectedItem[0].row,0));
+        }
+        drawchart();
+      }
+    
     chart.draw(data1, options1);
     chart2.draw(data2, options2);
     $('#result').html('<b>'+response.decayResults.reason+'</b><br/>'+response.subjectSymbol + ': Increase: <b>' + response.decayResults.subjectIncrease*100 + '%</b><br/>' + 
     		response.targetSymbol + ': Supposed increase: <b>' + response.decayResults.targetIncrease*100 + '%</b><br/>Actual increase: <b>' +
-    		response.decayResults.actualTargetIncrease*100 + '%</b><br/> Decay: <b>' + response.decayResults.decay*100+'%</b>');
+    		response.decayResults.actualTargetIncrease*100 + '%</b><br/>Trading Days: <b>' + response.decayResults.tradingDays+'</b><br/>Decay: <b>'+
+    		response.decayResults.decay*100 + '%</b>');
 }
 
 function standardPeriod(p) {

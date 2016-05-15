@@ -6,6 +6,8 @@
 var express = require('express')
   , routes = require('./routes/index')
   , user = require('./routes/user')
+  , decaycalc = require('./routes/decaycalc')
+  , chart = require('./routes/chart')
   , http = require('http')
   , path = require('path');
 
@@ -34,8 +36,10 @@ if ('development' == app.get('env')) {
 
 app.use('/', routes);
 app.use('/ercal', ercal);
+app.use('/decay', decaycalc);
 app.use('/indicator',indicator);
 app.use('/etfindicator',etfindicator);
+app.use('/chart',chart);
 
 //app.get('/', routes.index);
 //app.get('/users', user.list);

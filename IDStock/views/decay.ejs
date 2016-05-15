@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <script src="/javascripts/jquery-1.12.3.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="/javascripts/chart.js"></script>
+<script src="/javascripts/decay.js"></script>
 <html>
   <head>
     <title><%=title%></title>
@@ -18,8 +18,12 @@
     			 <label for="fromDate">From Date:</label>
     		</td>
     		<td>
-    			 <input type="date" id="fromDate" value ="getOneYearAgoString()" onchange="drawchart()">
+    			 <input type="date" id="fromDate" onchange="drawchart()">
     		</td>
+    		<td>
+    			 <input type="radio" value="fromDateRadio" name="chartRadio" checked>
+    		</td>
+    		
     	</tr>
     	
     	<tr>
@@ -27,7 +31,10 @@
     			 <label for="toDate">To Date:</label>
     		</td>
     		<td>
-    			 <input type="date" id="toDate" value="<%=(new Date()).toLocaleDateString()%>" onchange="drawchart()">
+    			 <input type="date" id="toDate" onchange="drawchart()">
+    		</td>
+    		<td>
+    			 <input type="radio" value="toDateRadio" name="chartRadio">
     		</td>
     	</tr>
     	

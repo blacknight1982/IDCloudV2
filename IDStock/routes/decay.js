@@ -5,8 +5,6 @@
 var express = require('express');
 var mysql = require('mysql');
 var logger = require('../modules/logger')(module);
-var yahoopricequeryhistory = require('../modules/yahoopricequeryhistory');
-var quandlpricequeryhistory = require('../modules/quandlpricequeryhistory');
 var async = require('async');
 var decaycalc = require('../modules/decaycalc');
 var router = express();
@@ -33,7 +31,7 @@ router.get('/', function (req, res, next) {
         	if (err) {
                 logger.log('error',err);
             }
-        	res.render('chart', {title: 'ETF Decay Calculator',etfs: rows});
+        	res.render('decay', {title: 'ETF Decay Calculator',etfs: rows});
         });
         conn.release();
     });
@@ -43,6 +41,8 @@ router.post('/', function (req, res, next) {
 	var symbol = req.body.symbol;
 	var fromDate = req.body.fromDate;
 	var toDate = req.body.toDate;
+	var targetArray = [];
+	var subjectArray = [];
 	var response = 
 	{
 			target : [],
@@ -80,7 +80,7 @@ router.post('/', function (req, res, next) {
 		async.series({
 			step1:function(cbsteps){
 				var queryString = "SELECT subject, correlation FROM etf_subject where symbol = '"+symbol + "'";
-				console.log(queryString);
+				logger.log('info',queryString);
 				mySQLPool.getConnection(function (err, conn) {
 			        if (err) {
 			        	throw err;
@@ -92,7 +92,6 @@ router.post('/', function (req, res, next) {
 				        }
 				    	subject = rows[0].subject;
 				    	correlation = rows[0].correlation;
-				    	console.log(subject);
 				    	response.subjectSymbol = subject;
 				        cbsteps();
 			        });
@@ -108,7 +107,6 @@ router.post('/', function (req, res, next) {
 				if(toDate !== ''){
 					queryString = queryString + " and date <='" + toDate +"'";
 				}
-				console.log(queryString);
 				mySQLPool.getConnection(function (err, conn) {
 			        if (err) {
 			        	throw err;
@@ -120,7 +118,12 @@ router.post('/', function (req, res, next) {
 				        }
 				        for(var i=0;i<rows.length;i++){
 				    		var colume = [rows[i].date.toLocaleString().slice(0,10), rows[i].adj_close];
+				    		var dailyValue = {
+				    				date: rows[i].date.toLocaleString().slice(0,10),
+				    				price: rows[i].adj_close
+				    		};
 				    		response.target.push(colume);
+				    		targetArray.push(dailyValue);
 				    	}
 				        cbsteps();
 			        });
@@ -137,7 +140,6 @@ router.post('/', function (req, res, next) {
 				if(toDate !== ''){
 					queryString = queryString + " and date <='" + toDate +"'";
 				}
-				console.log(queryString);
 				mySQLPool.getConnection(function (err, conn) {
 			        if (err) {
 			        	throw err;
@@ -149,7 +151,12 @@ router.post('/', function (req, res, next) {
 				        }
 				        for(var i=0;i<rows.length;i++){
 				    		var colume = [rows[i].date.toLocaleString().slice(0,10), rows[i].adj_close];
+				    		var dailyValue = {
+				    				date: rows[i].date.toLocaleString().slice(0,10),
+				    				price: rows[i].adj_close
+				    		};
 				    		response.subject.push(colume);
+				    		subjectArray.push(dailyValue)
 				    	}
 				        cbsteps();
 			        });
@@ -158,57 +165,8 @@ router.post('/', function (req, res, next) {
 			},
 			
 			step4:function(cbsteps){
-				var targetStartDate = response.target[0][0];
-				var targetToDate = response.target[response.target.length-1][0];
-				var subjectStartDate = response.subject[0][0];
-				var subjectToDate = response.subject[response.subject.length-1][0];
-				var targetStartPrice = response.target[0][1];
-				var targetToPrice = response.target[response.target.length-1][1];
-				var subjectStartPrice = response.subject[0][1];
-				var subjectToPrice =  response.subject[response.subject.length-1][1];
-				
-				response.decayResults.targetStartDate = targetStartDate;
-				response.decayResults.targetToDate = targetToDate;
-				response.decayResults.subjectStartDate = subjectStartDate;
-				response.decayResults.subjectToDate = subjectToDate;
-				response.decayResults.targetStartPrice = targetStartPrice;
-				response.decayResults.targetToPrice = targetToPrice;
-				response.decayResults.subjectStartPrice = subjectStartPrice;
-				response.decayResults.subjectToPrice = subjectToPrice;
-				response.correlation = correlation;
-				
-				var subjectIncrease = parseFloat(subjectToPrice)/parseFloat(subjectStartPrice) - 1;
-				var actualTargetIncrease = parseFloat(targetToPrice)/parseFloat(targetStartPrice) - 1;
-				
-				response.decayResults.subjectIncrease = subjectIncrease;
-				response.decayResults.actualTargetIncrease = actualTargetIncrease;
-				
-				if((targetStartDate===subjectStartDate)&&(targetToDate===subjectToDate)){
-					var tradingDays = response.target.length-1;
-					var subjectAverageIncrease = Math.pow((subjectIncrease + 1), 1/tradingDays) - 1;
-					var targetAverageIncrease = subjectAverageIncrease*parseFloat(correlation);
-					
-					var targetIncreaseFactor = Math.pow((targetAverageIncrease + 1), tradingDays);
-					var targetIncrease = targetIncreaseFactor - 1;
-					
-					var deserveValue = targetIncreaseFactor * parseFloat(targetStartPrice);
-					var actualValue = parseFloat(targetToPrice);
-					
-					response.decayResults.subjectIncrease = subjectIncrease;
-					response.decayResults.targetIncrease = targetIncrease;
-					response.decayResults.tradingDays = tradingDays;
-					
-					if(targetIncrease > -1){
-						response.decayResults.decay = 1-(actualValue/deserveValue);
-						response.decayResults.reason = 'Calculation Successful!';
-					}
-					else{
-						response.decayResults.reason = 'Subject depreciated too much! Cannot calculate decay.';
-					}
-				}
-				else{
-					response.decayResults.reason = 'Date range mis-match. Cannot calculate decay.';
-				}
+				response.decayResults = decaycalc(targetArray,subjectArray,correlation);
+				logger.log('info',response.decayResults);
 				cbsteps();
 			        
 			}

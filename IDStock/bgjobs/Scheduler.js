@@ -7,13 +7,19 @@ var IDStock_UpdateStockPrice = require('./IDStock_UpdateStockPrice');
 var IDStock_UpdatePriceHistory = require('./IDStock_UpdatePriceHistory');
 
 /*
- * Runs every weekday (Monday through Friday)
- * at 11:30:00 AM. It does not run on Saturday
- * or Sunday.
+ * Runs every weekday (Tuesday through Saturday)
+ * at 00:00:00 AM. It does not run on Monday or Sunday
  */
-/*var job = new CronJob('00 00 00 * * 1-6', IDStock_UpdateStockPrice, function() {
-	console.log('job stopped');
-}, true  Start the job right now 
-);*/
+var job1 = new CronJob('00 00 00 * * 2-6', IDStock_UpdateStockPrice, function() {
+	console.log('IDStock_UpdateStockPrice job stopped');
+}, true
+);
 
-IDStock_UpdatePriceHistory();
+/*
+ * Runs every weekday (Tuesday through Saturday)
+ * at 01:00:00 AM. It does not run on Monday or Sunday
+ */
+var job2 = new CronJob('00 00 01 * * 2-6', IDStock_UpdatePriceHistory, function() {
+	console.log('IDStock_UpdatePriceHistory job stopped');
+}, true
+);
