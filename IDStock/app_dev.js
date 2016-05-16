@@ -11,8 +11,6 @@ var express = require('express')
   , path = require('path');
 
 var ercal = require('./routes/ercal');
-var indicator = require('./routes/indicator');
-var etfindicator = require('./routes/etfindicator');
 
 var app = express();
 
@@ -35,8 +33,6 @@ if ('development' == app.get('env')) {
 
 app.use('/', routes);
 app.use('/ercal', ercal);
-app.use('/indicator',indicator);
-app.use('/etfindicator',etfindicator);
 app.use('/decay',decay);
 
 //app.get('/', routes.index);
