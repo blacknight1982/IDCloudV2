@@ -18,7 +18,7 @@ function drawchart(){
 		 $.ajax({
 	         type: 'POST',
 	         data: postData,
-	         url: '/decay',
+	         url: '/trading/decay',
 	         dataType: 'JSON'
 	     }).done(function(response) {
 	    	 
