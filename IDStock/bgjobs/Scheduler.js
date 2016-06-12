@@ -5,12 +5,13 @@
 var CronJob = require('cron').CronJob;
 var IDStock_UpdateStockPrice = require('./IDStock_UpdateStockPrice');
 var IDStock_UpdatePriceHistory = require('./IDStock_UpdatePriceHistory');
+var IDStock_UpdateERCalendar = require('./IDStock_UpdateERCalendar');
 
 /*
  * Runs every weekday (Tuesday through Saturday)
  * at 00:00:00 AM. It does not run on Monday or Sunday
  */
-var job1 = new CronJob('00 00 00 * * 2-6', IDStock_UpdateStockPrice, function() {
+var IDStock_UpdateStockPriceJob = new CronJob('00 00 00 * * 2-6', IDStock_UpdateStockPrice, function() {
 	console.log('IDStock_UpdateStockPrice job stopped');
 }, true
 );
@@ -19,7 +20,12 @@ var job1 = new CronJob('00 00 00 * * 2-6', IDStock_UpdateStockPrice, function() 
  * Runs every weekday (Tuesday through Saturday)
  * at 01:00:00 AM. It does not run on Monday or Sunday
  */
-var job2 = new CronJob('00 00 01 * * 2-6', IDStock_UpdatePriceHistory, function() {
+var IDStock_UpdatePriceHistoryJob = new CronJob('00 00 01 * * 2-6', IDStock_UpdatePriceHistory, function() {
 	console.log('IDStock_UpdatePriceHistory job stopped');
+}, true
+);
+
+var IDStock_UpdateERCalendarJob = new CronJob('00 00 01 * * 7', IDStock_UpdateERCalendar, function() {
+	console.log('IDStock_UpdateERCalendar job stopped');
 }, true
 );

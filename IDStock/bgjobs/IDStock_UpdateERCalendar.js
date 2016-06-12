@@ -9,12 +9,16 @@ var logger = require('../modules/logger')(module);
 
 var symbolArray = [];
 
-var mySQLPool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'ljh123',
-    database: 'idstock'
-});
+var mySQLPool;
+
+var IDStock_UpdateERCalendar = function(){
+	
+	mySQLPool = mysql.createPool({
+	    host: 'localhost',
+	    user: 'root',
+	    password: 'ljh123',
+	    database: 'idstock'
+	});
 
 async.series({
 	/*
@@ -52,6 +56,7 @@ async.series({
     logger.log('info','cb level2 all executed');
     mySQLPool.end();
 });
+}
 
 function queryEarningCalIntoDB(cbGlobal){
 	logger.log("info","Entering queryEarningCalIntoDB...");
@@ -78,3 +83,5 @@ function queryEarningCalIntoDB(cbGlobal){
 		cbGlobal();
 	});
 }
+
+module.exports = IDStock_UpdateERCalendar;

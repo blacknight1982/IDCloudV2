@@ -14,7 +14,7 @@ function triggerTableRender(){
         var calCell = row.querySelectorAll('[name=td_erDate]');
         var calCell2 = row.querySelectorAll('[name=td_currentPrice]');
         var calCell3 = row.querySelectorAll('[name=td_marketCap]');
-        if((calCell[0].innerText == vdate)&&(parseFloat(calCell3[0].innerText) > 1000)){
+        if((calCell[0].innerText == vdate)&&(parseFloat(calCell3[0].innerText) > 500)){
         	row.setAttribute("style", "display:table-row");
             if(parseFloat(calCell2[0].innerText)>100){
                 row.setAttribute("style", "display:table-row;background-color:#E1FFA2");
