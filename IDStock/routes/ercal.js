@@ -3,25 +3,16 @@
  */
 
 var express = require('express');
-var mysql = require('mysql');
 var logger = require('../modules/logger')(module);
 var router = express();
-
+var db = require('../modules/db');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
     var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price FROM company_tickers_ercal where erdate <> '0000-00-00'"
-	var connection = mysql.createConnection(
-	        {
-	            host     : 'localhost',
-	            user     : 'root',
-	            password : 'ljh123',
-	            database : 'idstock',
-	        }
-	    );
-    connection.connect();
+	
     
-    connection.query(queryString, function(err, rows, fields) {
+    db.get().query(queryString, function(err, rows, fields) {
         if (err) throw err;
 
         for (var i in rows) {
@@ -31,7 +22,6 @@ router.get('/', function (req, res, next) {
         logger.log('info',rows);
         res.render('ercal', {title: 'IDCloud Trading Tool',companyList: rows});
     });
-    connection.end();
 });
 
 module.exports = router;
