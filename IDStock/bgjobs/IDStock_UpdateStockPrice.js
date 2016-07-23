@@ -40,7 +40,6 @@ var IDStock_UpdateStockPrice = function(){
 	    }
 	},function (err, results) {
 	    logger.log('info','cb level2 all executed');
-	    mySQLPool.end();
 	});
 };
 
