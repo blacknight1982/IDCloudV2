@@ -1,15 +1,15 @@
 /**
- * Created by John Liu on 04/28/2016.
+ * Created by John Liu on 07/22/2016.
  */
 var request = require('request');
 var async = require("async");
-var yahoopricequery = require('../modules/yahoopricequery');
+var yahoocompanydataquery = require('../modules/yahoocompanydataquery');
 var db = require('../modules/db.js');
 var logger = require('../modules/logger')(module);
 
 var symbolArray = [];
 
-var IDStock_UpdateStockPrice = function(){
+var IDStock_UpdateCompanyData = function(){
 	
 	async.series({
 		/*
@@ -17,7 +17,7 @@ var IDStock_UpdateStockPrice = function(){
 		 */
 	    step1: function(cbGlobal){
 
-	    	var queryString = 'SELECT symbol FROM ticker_price';
+	    	var queryString = 'SELECT symbol FROM company_tickers';
 	    	db.get().query(queryString, function (error, rows, results) {
                 if (error) {
                     logger.log('error',error);
@@ -45,13 +45,18 @@ var IDStock_UpdateStockPrice = function(){
 
 function queryStockPriceIntoDB(cbGlobal){
 	logger.log("info","Entering queryStockPriceIntoDB...");
-	var dateToday = new Date();
-	var dateTodayString = dateToday.toLocaleDateString().slice(0,10);
 	logger.log('info',symbolArray);
-	yahoopricequery(symbolArray,function(symbolObjectArray){
+	yahoocompanydataquery(symbolArray,function(symbolObjectArray){
 		async.eachSeries(symbolObjectArray,
 			function (currentSymbol, cbEachSymbol){
-				var queryString = "UPDATE ticker_price SET price = "+ currentSymbol.price+", last_update = '" + dateTodayString+"' where symbol = '"+currentSymbol.symbol+"' and last_update <= '"+dateTodayString+"'";
+				var dateToInsert = new Date(currentSymbol.last_tradingday);
+				var dateToInsertString = dateToInsert.toLocaleDateString().slice(0,10);
+				//var dividend = currentSymbol.dividend === 'N/A'? 0: currentSymbol.dividend;
+				//var pe = currentSymbol.pe === 'N/A'? 0: currentSymbol.pe;
+				//var eps = currentSymbol.eps === 'N/A'? 0: currentSymbol.eps;
+				var queryString = "INSERT into company_data (symbol, price, dividend, pe, eps, last_tradingday) values ('"
+					+ currentSymbol.symbol + "'," + currentSymbol.price + ",'" + currentSymbol.dividend + "','" + currentSymbol.pe + "','" + currentSymbol.eps + "','" + dateToInsertString + "')"
+					+ " ON DUPLICATE KEY UPDATE price = "+ currentSymbol.price+",dividend = '" + currentSymbol.dividend + "', pe = '"+currentSymbol.pe+"', eps = '"+currentSymbol.eps + "', last_tradingday = '"+dateToInsertString+"'";
 				logger.log('info',queryString);
 				
 				db.get().query(queryString, function (error, results) {
@@ -69,4 +74,4 @@ function queryStockPriceIntoDB(cbGlobal){
 	});
 }
 
-module.exports = IDStock_UpdateStockPrice;
+module.exports = IDStock_UpdateCompanyData;

@@ -9,7 +9,7 @@ var db = require('../modules/db');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price FROM company_tickers_ercal where erdate <> '0000-00-00'"
+    var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps FROM company_tickers_ercal where erdate <> '0000-00-00'"
 	
     
     db.get().query(queryString, function(err, rows, fields) {

@@ -28,6 +28,8 @@
         <td>Sector</td>
         <td>Industry</td>
         <td>Current Share Price</td>
+        <td>PE</td>
+        <td>EPS</td>
         <td>ER Date</td>
         <td>ER Time</td>
     </tr>
@@ -41,6 +43,8 @@
         <td><%= oneCompany.sector %></td>
         <td><%= oneCompany.industry %></td>
         <td name="td_currentPrice"><%= oneCompany.price %></td>
+        <td name="td_pe"><%= oneCompany.pe %></td>
+        <td name="td_eps"><%= oneCompany.eps %></td>
         <td name="td_erDate"><%= oneCompany.erdate %></td>
         <td name="td_erTime"><a href="http://www.nasdaq.com/earnings/report/<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.erdetails %></td>
     </tr>
