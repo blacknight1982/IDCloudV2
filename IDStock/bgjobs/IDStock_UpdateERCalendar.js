@@ -45,11 +45,13 @@ async.series({
 
 function queryEarningCalIntoDB(cbGlobal){
 	logger.log("info","Entering queryEarningCalIntoDB...");
+	var dateToday = new Date();
+	var dateTodayString = dateToday.toLocaleDateString().slice(0,10);
 	async.eachSeries(symbolArray,function (currentSymbol, cbEachSymbol){
 		nasdaqercal(currentSymbol.symbol,
 				function(resultSymbol){
-					var queryString = "insert into company_earning_cal (symbol, erdate, erdetails) values ('"+resultSymbol.symbolName+"','"+resultSymbol.erDate+"','"+resultSymbol.erDetails+"')"
-		            + " ON DUPLICATE KEY UPDATE erdate = '"+resultSymbol.erDate + "', erdetails = '"+resultSymbol.erDetails+"'";
+					var queryString = "insert into company_earning_cal (symbol, erdate, erdetails, last_update) values ('"+resultSymbol.symbolName+"','"+resultSymbol.erDate+"','"+resultSymbol.erDetails+"','"+dateTodayString+"')" 
+		            + " ON DUPLICATE KEY UPDATE erdate = '"+resultSymbol.erDate + "', erdetails = '"+resultSymbol.erDetails+"', last_update = '"+dateTodayString + "'";
 					logger.log('info',queryString);
 					db.get().query(queryString, function (error, rows, results) {
 		            	if (error) {

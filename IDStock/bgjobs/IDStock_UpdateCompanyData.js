@@ -51,12 +51,14 @@ function queryStockPriceIntoDB(cbGlobal){
 			function (currentSymbol, cbEachSymbol){
 				var dateToInsert = new Date(currentSymbol.last_tradingday);
 				var dateToInsertString = dateToInsert.toLocaleDateString().slice(0,10);
+				var dateToday = new Date();
+				var dateTodayString = dateToday.toLocaleDateString().slice(0,10);
 				//var dividend = currentSymbol.dividend === 'N/A'? 0: currentSymbol.dividend;
 				//var pe = currentSymbol.pe === 'N/A'? 0: currentSymbol.pe;
 				//var eps = currentSymbol.eps === 'N/A'? 0: currentSymbol.eps;
-				var queryString = "INSERT into company_data (symbol, price, dividend, pe, eps, last_tradingday) values ('"
-					+ currentSymbol.symbol + "'," + currentSymbol.price + ",'" + currentSymbol.dividend + "','" + currentSymbol.pe + "','" + currentSymbol.eps + "','" + dateToInsertString + "')"
-					+ " ON DUPLICATE KEY UPDATE price = "+ currentSymbol.price+",dividend = '" + currentSymbol.dividend + "', pe = '"+currentSymbol.pe+"', eps = '"+currentSymbol.eps + "', last_tradingday = '"+dateToInsertString+"'";
+				var queryString = "INSERT into company_data (symbol, price, dividend, pe, eps, last_tradingday, last_update) values ('"
+					+ currentSymbol.symbol + "'," + currentSymbol.price + ",'" + currentSymbol.dividend + "','" + currentSymbol.pe + "','" + currentSymbol.eps + "','" + dateToInsertString + "','"+dateTodayString+"')"
+					+ " ON DUPLICATE KEY UPDATE price = "+ currentSymbol.price+",dividend = '" + currentSymbol.dividend + "', pe = '"+currentSymbol.pe+"', eps = '"+currentSymbol.eps + "', last_tradingday = '"+dateToInsertString+"', last_update = '"+dateTodayString+"'";
 				logger.log('info',queryString);
 				
 				db.get().query(queryString, function (error, results) {

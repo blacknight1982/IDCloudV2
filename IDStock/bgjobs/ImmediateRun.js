@@ -15,8 +15,8 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 	    console.log('Unable to connect to MySQL.');
 	    process.exit(1);
 	  } else {
-		  //IDStock_UpdateCompanyData();
+		  IDStock_UpdateCompanyData();
 		  //IDStock_UpdatePriceHistory();
-		  IDStock_UpdateERCalendar();
+		  //IDStock_UpdateERCalendar();
 	  }
 	});
