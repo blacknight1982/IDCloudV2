@@ -4,8 +4,7 @@
 var request = require('request');
 var csv_stream = require('csv-stream');
 var async = require('async');
-//var fs = require('fs');
-var mysql = require('mysql');
+var db = require('../modules/db.js');
 var logger = require('../modules/logger')(module);
 
 // All of these arguments are optional.
@@ -24,15 +23,6 @@ var companyArrayCleansed = [];
 var requestURLs = ['http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nasdaq&render=download',
     'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nyse&render=download',
     'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=amex&render=download'];
-
-var mySQLPool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'ljh123',
-    database: 'idstock'
-});
-
-logger.log('info','log to file');
 
 async.each(requestURLs,
     function (requestURL, cb) {
@@ -57,19 +47,14 @@ async.each(requestURLs,
         	 * Step1 clear the DB
         	 */
             step1: function(cblevel2){
-                mySQLPool.getConnection(function (err, conn) {
-                    if (err){
-                    	throw err;
+                
+                var queryString = "delete from company_tickers";
+                db.get().query(queryString, function (error, results) {
+                    if (error) {
+                        logger.log('error',error);
                     }
-                    var queryString = "delete from company_tickers";
-                    conn.query(queryString, function (error, results) {
-                        if (error) {
-                            logger.log('error',error);
-                        }
-                        
-                        cblevel2();
-                    });
-                    conn.release();
+                    
+                    cblevel2();
                 });
             },
             
@@ -95,7 +80,6 @@ async.each(requestURLs,
             }
         },function (err, results) {
             logger.log('info','cb level2 all executed');
-            mySQLPool.end();
         });
     }
 );
@@ -136,18 +120,11 @@ function outPutFilteredDataToDB_company_tickers(cblevel2) {
     queryString = queryString.substr(0, queryString.length - 1);
     queryString = queryString + "ON DUPLICATE KEY UPDATE last_update = '"+ dateTodayString+"'";
     logger.log('info','Query String is : %s',queryString);
-
-    mySQLPool.getConnection(function (err, conn) {
-        if (err){
-        	throw err;
+    db.get().query(queryString, function (error, results) {
+        if (error) {
+            logger.log('error',error);
         }
-        conn.query(queryString, function (error, results) {
-            if (error) {
-                logger.log('error',error);
-            }
-            cblevel2();
-        });
-        conn.release();
+        cblevel2();
     });
 }
 
@@ -159,17 +136,11 @@ function outPutFilteredDataToDB_ticker_price(cblevel2) {
     queryString = queryString.substr(0, queryString.length - 1);
     queryString = queryString + "ON DUPLICATE KEY UPDATE last_update = '0000-00-00'";
     logger.log('info','Query String is : %s',queryString);
-
-    mySQLPool.getConnection(function (err, conn) {
-        if (err){
-        	throw err;
+    
+    db.get().query(queryString, function (error, results) {
+        if (error) {
+            logger.log('error',error);
         }
-        conn.query(queryString, function (error, results) {
-            if (error) {
-                logger.log('error',error);
-            }
-            cblevel2();
-        });
-        conn.release();
+        cblevel2();
     });
 }

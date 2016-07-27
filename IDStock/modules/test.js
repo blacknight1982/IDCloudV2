@@ -1,8 +1,7 @@
 /**
  * New node file
  */
-var yahoopricequery = require('./yahoopricequery');
-var yahoopricequeryhistory = require('./yahoopricequeryhistory');
+var yahoocompanydataquery = require('./yahoocompanydataquery');
 var quandlpricequeryhistory = require('./quandlpricequeryhistory');
 var nasdaqercalhistory = require('./nasdaqercalhistory');
 var async = require('async');
@@ -16,7 +15,11 @@ var historyPriceArraySubject = [];
 
 //yahoopricequery(symbolArray,callback);
 
+<<<<<<< HEAD
 nasdaqercalhistory('AAPL',callback);
+=======
+yahoocompanydataquery(symbolArray,callback)
+>>>>>>> dev
 
 function callback(array1){
 	console.log(array1);
@@ -32,4 +35,9 @@ function callback(array1){
 },
 	function (err, results) {
     logger.log('info','cb level2 all executed');
+<<<<<<< HEAD
 });*/
+=======
+});
+*/
+>>>>>>> dev
