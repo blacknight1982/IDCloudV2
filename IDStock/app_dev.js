@@ -5,6 +5,7 @@
 var express = require('express'), routes = require('./routes/index'), user = require('./routes/user'), decay = require('./routes/decay'), accesslog = require('./routes/accesslog'), http = require('http'), path = require('path');
 var db = require('./modules/db');
 var ercal = require('./routes/ercal');
+var ercalhistory = require('./routes/ercalhistory');
 
 var app = express();
 
@@ -28,6 +29,7 @@ if ('development' == app.get('env')) {
 app.use('/', routes);
 app.use('/trading/ercal', ercal);
 app.use('/trading/decay', decay);
+app.use('/trading/ercalhistory', ercalhistory);
 app.all('/trading/*', accesslog);
 
 //app.get('/', routes.index);

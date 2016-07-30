@@ -17,36 +17,40 @@
 	</td>
 </table>
 
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<table id="tab_companies" class="sortable">
+<h1>Earning Calendar for Industry: <%= industry %></h1>
+
+<table class="sortable">
     <thead>
     <tr>
+        <td>Report Date</td>
         <td>Symbol</td>
         <td>Name</td>
-        <td>Market Cap(M)</td>
         <td>Sector</td>
-        <td>Industry</td>
-        <td>Current Share Price</td>
-        <td>PE</td>
         <td>EPS</td>
-        <td>ER Date</td>
-        <td>ER Time</td>
+        <td>EPS Forecast</td>
+        <td>EPS Surprise</td>
+        <td>Price Last</td>
+        <td>Price ER Day</td>
+        <td>Price Next Day Date</td>
+        <td>Day 1 Price Change%</td>
+        <td>Day 2 Price Change%</td>
     </tr>
     </thead>
     <tbody id="tab_companies_body">
     <% companyList.forEach(function(oneCompany){ %>
-    <tr id="<%= oneCompany.symbol %>" style="display:none">
+    <tr>
+        <td><%= oneCompany.rdate %></td>
         <td><a href="https://www.google.com/finance/option_chain?q=<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.symbol %></a></td>
         <td><%= oneCompany.name %></td>
-        <td name="td_marketCap"><%= oneCompany.market_cap %></td>
         <td><%= oneCompany.sector %></td>
-        <td><a href="/trading/ercalhistory/<%= encodeURIComponent(oneCompany.industry)%>" target="_blank"><%= oneCompany.industry %></a></td>
-        <td name="td_currentPrice"><%= oneCompany.price %></td>
-        <td name="td_pe"><%= oneCompany.pe %></td>
-        <td name="td_eps"><%= oneCompany.eps %></td>
-        <td name="td_erDate"><%= oneCompany.erdate %></td>
-        <td name="td_erTime"><a href="http://www.nasdaq.com/earnings/report/<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.erdetails %></a></td>
+        <td><%= oneCompany.eps %></td>
+        <td><%= oneCompany.epsf %></td>
+        <td><%= oneCompany.surprise %></td>
+        <td><%= oneCompany.price_last %></td>
+        <td><%= oneCompany.price_erday %></td>
+        <td><%= oneCompany.price_next %></td>
+        <td><%= oneCompany.percent_day1 %></td>
+        <td><%= oneCompany.percent_day2 %></td>
     </tr>
     <% }); %>
     </tbody>
