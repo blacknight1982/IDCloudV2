@@ -37,7 +37,7 @@
     <tbody id="tab_companies_body">
     <% companyList.forEach(function(oneCompany){ %>
     <tr id="<%= oneCompany.symbol %>" style="display:none">
-        <td><a href="https://www.google.com/finance/option_chain?q=<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.symbol %></a></td>
+        <td><a href="https://www.zacks.com/stock/chart/<%= oneCompany.symbol %>/price-consensus-eps-surprise-chart %>" target="_blank"><%= oneCompany.symbol %></a></td>
         <td><%= oneCompany.name %></td>
         <td name="td_marketCap"><%= oneCompany.market_cap %></td>
         <td><%= oneCompany.sector %></td>

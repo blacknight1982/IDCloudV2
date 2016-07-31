@@ -20,7 +20,7 @@ router.get('/:industry', function (req, res, next) {
 		 */
 	    step1: function(cbGlobal){
 	        
-	    	var queryString_future = "SELECT erdate, symbol,name,sector,price FROM company_tickers_ercal where erdate <= DATE_ADD(NOW(), INTERVAL 1 MONTH) and erdate <> '0000-00-00' and industry = '" + req.params.industry  +"' order by erdate desc";
+	    	var queryString_future = "SELECT erdate, symbol,name,sector,market_cap,price,eps FROM company_tickers_ercal where erdate <= DATE_ADD(NOW(), INTERVAL 1 MONTH) and erdate <> '0000-00-00' and industry = '" + req.params.industry  +"' order by erdate desc";
 	    	logger.log('info',queryString_future);	
 	    	db.get().query(queryString_future, function(err, rows, fields) {
 	            if (err) throw err;
@@ -38,7 +38,7 @@ router.get('/:industry', function (req, res, next) {
 	     * Step2: read past ER calendar
 	     */
 	    step2: function(cbGlobal){
-	    	var queryString_history = "SELECT rdate, symbol, name, sector, eps, epsf, surprise, price_last, price_erday, price_next,percent_day1,percent_day2 FROM idstock.company_tickers_ercal_history where rdate >= DATE_SUB(NOW(), INTERVAL 3 MONTH) and industry = '" + req.params.industry  +"' order by rdate desc";
+	    	var queryString_history = "SELECT rdate, symbol, name, sector, market_cap ,eps, epsf, surprise, price_last, price_erday, price_next,percent_day1,percent_day2,percent_twoday FROM idstock.company_tickers_ercal_history where rdate >= DATE_SUB(NOW(), INTERVAL 3 MONTH) and industry = '" + req.params.industry  +"' order by rdate desc";
 	    	logger.log('info',queryString_history);	
 	        db.get().query(queryString_history, function(err, rows, fields) {
 	            if (err) throw err;
