@@ -28,7 +28,7 @@ var IDStock_UpdateERHistory = function(){
 	            }
 	            else {
 	            	symbolArray = rows;
-	            	symbolArray = symbolArray.slice(0,11);
+	            	//symbolArray = symbolArray.slice(0,11);
 	            	logger.log('info',symbolArray);
 	            }
 	            cbGlobal();
@@ -55,7 +55,7 @@ var IDStock_UpdateERHistory = function(){
 	            }
 	            else {
 	            	symbolArray = rows;
-	            	symbolArray = symbolArray.slice(0,11);
+	            	//symbolArray = symbolArray.slice(0,11);
 	            }
 	            cbGlobal();
 	        });
