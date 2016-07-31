@@ -14,22 +14,22 @@ function triggerTableRender(){
         var calCell2 = row.querySelectorAll('[name=td_percentday2]');
 	
         if(parseFloat(calCell[0].innerText)>0){
-        	calCell[0].setAttribute("style", "background-color:#6EFF4A");
+        	calCell[0].setAttribute("style", "background-color:#E1FFA2");
            
         }
         
         if(parseFloat(calCell[0].innerText)<0){
-        	calCell[0].setAttribute("style", "background-color:#FF5C5C");
+        	calCell[0].setAttribute("style", "background-color:#FFCC99");
            
         }
         
         if(parseFloat(calCell2[0].innerText)>0){
-        	calCell2[0].setAttribute("style", "background-color:#6EFF4A");
+        	calCell2[0].setAttribute("style", "background-color:#E1FFA2");
            
         }
         
         if(parseFloat(calCell2[0].innerText)<0){
-        	calCell2[0].setAttribute("style", "background-color:#FF5C5C");
+        	calCell2[0].setAttribute("style", "background-color:#FFCC99");
            
         }
     }
