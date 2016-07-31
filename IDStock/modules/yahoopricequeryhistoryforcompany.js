@@ -43,7 +43,7 @@ function queryHistory(symbol, start_date, end_date, callback){
 	var historyPriceArray=[];
 	logger.log('info',url);
 	var csvStreamTicker = csv_stream.createStream(csvReadOptionsTicker);
-	request(url).pipe(csvStreamTicker)
+	request(url,{timeout: 60000}).pipe(csvStreamTicker)
 		.on('data', function (oneDayData) {
 			var historyPrice = {
 					date:oneDayData.date,

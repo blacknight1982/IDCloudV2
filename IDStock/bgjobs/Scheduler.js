@@ -6,6 +6,7 @@ var CronJob = require('cron').CronJob;
 var IDStock_UpdateCompanyData = require('./IDStock_UpdateCompanyData');
 var IDStock_UpdatePriceHistory = require('./IDStock_UpdatePriceHistory');
 var IDStock_UpdateERCalendar = require('./IDStock_UpdateERCalendar');
+var IDStock_UpdateERHistory = require('./IDStock_UpdateERHistory');
 var db = require('../modules/db');
 
 
@@ -35,6 +36,11 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  var IDStock_UpdateERCalendarJob = new CronJob('00 00 01 * * 7', IDStock_UpdateERCalendar, function() {
 		  	console.log('IDStock_UpdateERCalendar job stopped');
 		  }, true
+		  );
+		  
+		  var IDStock_UpdateERHistoryJob = new CronJob('00 00 02 * * 7', IDStock_UpdateERHistory, function() {
+			  	console.log('IDStock_UpdateERCalendar job stopped');
+			  }, true
 		  );
 	  }
 	});

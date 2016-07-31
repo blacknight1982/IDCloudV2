@@ -38,7 +38,7 @@ router.get('/:industry', function (req, res, next) {
 	     * Step2: read past ER calendar
 	     */
 	    step2: function(cbGlobal){
-	    	var queryString_history = "SELECT rdate, symbol, name, sector, eps, epsf, surprise, price_last, price_erday, price_next,percent_day1,percent_day2 FROM idstock.company_tickers_ercal_history where rdate >= DATE_SUB(NOW(), INTERVAL 6 MONTH) and industry = '" + req.params.industry  +"' order by rdate desc";
+	    	var queryString_history = "SELECT rdate, symbol, name, sector, eps, epsf, surprise, price_last, price_erday, price_next,percent_day1,percent_day2 FROM idstock.company_tickers_ercal_history where rdate >= DATE_SUB(NOW(), INTERVAL 3 MONTH) and industry = '" + req.params.industry  +"' order by rdate desc";
 	    	logger.log('info',queryString_history);	
 	        db.get().query(queryString_history, function(err, rows, fields) {
 	            if (err) throw err;

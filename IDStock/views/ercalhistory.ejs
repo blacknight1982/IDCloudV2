@@ -1,21 +1,13 @@
 <!DOCTYPE html>
-<script src="/javascripts/earningcal.js"></script>
+<script src="/javascripts/earningcalhistory.js"></script>
 <script src="/javascripts/sorttable.js"></script>
 <html>
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
 </head>
-<body onload="calChange()">
+<body onload="bodyOnLoad()">
 <%include templates/header.ejs%>
-<table>
-	<td>
-		Please enter a date in the future:
-	</td>
-	<td>
-		<input type="date" id="inputCalDate" onchange="calChange()" value="<%=(new Date()).toLocaleDateString()%>">
-	</td>
-</table>
 
 <h1>Earning Calendar for Industry: <%= industry %></h1>
 
@@ -49,8 +41,8 @@
         <td><%= oneCompany.price_last %></td>
         <td><%= oneCompany.price_erday %></td>
         <td><%= oneCompany.price_next %></td>
-        <td><%= oneCompany.percent_day1 %></td>
-        <td><%= oneCompany.percent_day2 %></td>
+        <td name="td_percentday1"><%= oneCompany.percent_day1 %></td>
+        <td name="td_percentday2"><%= oneCompany.percent_day2 %></td>
     </tr>
     <% }); %>
     </tbody>

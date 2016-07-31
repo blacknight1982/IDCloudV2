@@ -28,7 +28,7 @@ var IDStock_UpdateERHistory = function(){
 	            }
 	            else {
 	            	symbolArray = rows;
-	            	//symbolArray = symbolArray.slice(0,11);
+	            	//symbolArray = symbolArray.slice(0,2);
 	            	logger.log('info',symbolArray);
 	            }
 	            cbGlobal();
@@ -38,9 +38,9 @@ var IDStock_UpdateERHistory = function(){
 	    /*
 	     * Step2: Query for Earning Calendar History into DB
 	     */
-	    step2: function(cbGlobal){
+	   /* step2: function(cbGlobal){
 	        queryEarningCalIntoDB(cbGlobal);
-	    },
+	    },*/
 	    
 	    /*
 		 * Step 3 select symbles with er price not updated  
@@ -55,7 +55,7 @@ var IDStock_UpdateERHistory = function(){
 	            }
 	            else {
 	            	symbolArray = rows;
-	            	//symbolArray = symbolArray.slice(0,11);
+	            	//symbolArray = symbolArray.slice(0,2);
 	            }
 	            cbGlobal();
 	        });
@@ -79,13 +79,13 @@ function queryEarningCalIntoDB(cbGlobal){
 		nasdaqercalhistory(currentSymbol.symbol,
 				function(ercalHistoryArray){
 					if(ercalHistoryArray.length>0){
-						var queryString = "insert into company_ercal_history (symbol, fquarter, rdate, eps, epsf, surprise, last_update) values ";
+						var queryString = "insert into company_ercal_history (symbol, fquarter, rdate, eps, epsf, surprise) values ";
 		                for(i=0;i<ercalHistoryArray.length;i++){
 		                	queryString = queryString + "('" + currentSymbol.symbol + "','" + ercalHistoryArray[i].fQuarter + "','" + ercalHistoryArray[i].rDate + "','" + 
-		                	ercalHistoryArray[i].eps + "','" + ercalHistoryArray[i].epsf + "','" + ercalHistoryArray[i].surprise + "','" + dateTodayString +"')," 
+		                	ercalHistoryArray[i].eps + "','" + ercalHistoryArray[i].epsf + "','" + ercalHistoryArray[i].surprise + "')," 
 		                }
 		                queryString = queryString.substr(0, queryString.length - 1);
-		                queryString = queryString + " ON DUPLICATE KEY UPDATE symbol = '"+ currentSymbol.symbol + "', last_update = '" + dateTodayString + "'";
+		                queryString = queryString + " ON DUPLICATE KEY UPDATE symbol = '"+ currentSymbol.symbol  + "'";
 		                logger.log('info',queryString);
 		                db.get().query(queryString, function (error, rows, results) {
 		                	if (error) {
@@ -158,12 +158,13 @@ function queryPriceHistoryIntoDB(cbGlobal){
 		     */
 		    step3: function(cbGlobal2){
 		    	logger.log("info","Step 3");
+		    	var j = priceArray.length-1;
 		    	for(var i=0;i<erDates.length;i++){
-		    		for(var j=0;j<priceArray.length;j++){
+		    		for(;j>=0;j--){
 		    			if(erDates[i].rdate.toLocaleString().slice(0,10) === priceArray[j].date){
 		    				var queryString = "UPDATE company_ercal_history set price_last = "+ 
-		    				priceArray[j-1].adjClose + ", price_erday = " + priceArray[j].adjClose + ", price_next = " + 
-		    				priceArray[j+1].adjClose + ", last_update = '" + dateTodayString + "'"
+		    				priceArray[j+1].adjClose + ", price_erday = " + priceArray[j].adjClose + ", price_next = " + 
+		    				priceArray[j-1].adjClose + ", last_update = '" + dateTodayString + "'"
 		    				+ " where symbol = '" + currentSymbol.symbol+"' and rdate = '" + erDates[i].rdate.toLocaleString().slice(0,10) +"'";
 		    				logger.log("info",queryString);
 		    				
@@ -173,6 +174,7 @@ function queryPriceHistoryIntoDB(cbGlobal){
 			                        throw error;
 			                	}
 			                });
+		    				break;
 		    			}
 		    		}
 		    	}
