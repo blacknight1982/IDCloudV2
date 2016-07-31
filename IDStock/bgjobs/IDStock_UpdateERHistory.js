@@ -38,9 +38,9 @@ var IDStock_UpdateERHistory = function(){
 	    /*
 	     * Step2: Query for Earning Calendar History into DB
 	     */
-	   /* step2: function(cbGlobal){
+	    step2: function(cbGlobal){
 	        queryEarningCalIntoDB(cbGlobal);
-	    },*/
+	    },
 	    
 	    /*
 		 * Step 3 select symbles with er price not updated  
