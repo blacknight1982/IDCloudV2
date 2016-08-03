@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<script src="/javascripts/jquery-1.12.3.min.js"></script>
 <script src="/javascripts/earningcal.js"></script>
 <script src="/javascripts/sorttable.js"></script>
+
 <html>
 <head>
     <title><%= title %></title>
@@ -30,25 +32,11 @@
         <td>Current Share Price</td>
         <td>PE</td>
         <td>EPS</td>
-        <td>ER Date</td>
         <td>ER Time</td>
     </tr>
     </thead>
     <tbody id="tab_companies_body">
-    <% companyList.forEach(function(oneCompany){ %>
-    <tr id="<%= oneCompany.symbol %>" style="display:none">
-        <td><a href="https://www.zacks.com/stock/chart/<%= oneCompany.symbol %>/price-consensus-eps-surprise-chart %>" target="_blank"><%= oneCompany.symbol %></a></td>
-        <td><%= oneCompany.name %></td>
-        <td name="td_marketCap"><%= oneCompany.market_cap %></td>
-        <td><%= oneCompany.sector %></td>
-        <td><a href="/trading/ercalhistory/<%= encodeURIComponent(oneCompany.industry)%>" target="_blank"><%= oneCompany.industry %></a></td>
-        <td name="td_currentPrice"><%= oneCompany.price %></td>
-        <td name="td_pe"><%= oneCompany.pe %></td>
-        <td name="td_eps"><%= oneCompany.eps %></td>
-        <td name="td_erDate"><%= oneCompany.erdate %></td>
-        <td name="td_erTime"><a href="http://www.nasdaq.com/earnings/report/<%= oneCompany.symbol %>" target="_blank"><%= oneCompany.erdetails %></a></td>
-    </tr>
-    <% }); %>
+    
     </tbody>
 </table>
 </body>

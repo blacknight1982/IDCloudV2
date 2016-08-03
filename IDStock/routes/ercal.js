@@ -7,10 +7,13 @@ var logger = require('../modules/logger')(module);
 var router = express();
 var db = require('../modules/db');
 
-/* GET home page. */
 router.get('/', function (req, res, next) {
-    var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps FROM company_tickers_ercal where erdate <> '0000-00-00'"
-	
+        res.render('ercal', {title: 'IDCloud Trading Tool'});
+});
+
+router.get('/:date', function (req, res, next) {
+    var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps FROM company_tickers_ercal where erdate = '" + req.params.date + "'"
+    logger.log('info',queryString);
     
     db.get().query(queryString, function(err, rows, fields) {
         if (err) throw err;
@@ -19,8 +22,8 @@ router.get('/', function (req, res, next) {
             rows[i].erdate = rows[i].erdate.toLocaleString().slice(0,10);
             rows[i].market_cap = Math.floor(rows[i].market_cap);
         }
-        logger.log('info',rows);
-        res.render('ercal', {title: 'IDCloud Trading Tool',companyList: rows});
+        var response = {er_companies:rows};
+        res.json(response);
     });
 });
 
