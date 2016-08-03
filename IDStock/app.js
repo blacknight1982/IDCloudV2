@@ -6,6 +6,7 @@ var express = require('express'), routes = require('./routes/index'), user = req
 var db = require('./modules/db');
 var ercal = require('./routes/ercal');
 var ercalhistory = require('./routes/ercalhistory');
+var industryperf = require('./routes/industryperf');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/', routes);
 app.use('/trading/ercal', ercal);
 app.use('/trading/decay', decay);
 app.use('/trading/ercalhistory', ercalhistory);
+app.use('/trading/industryperf', industryperf);
 app.all('/trading/*', accesslog);
 
 //app.get('/', routes.index);
