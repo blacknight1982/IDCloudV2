@@ -15,6 +15,7 @@
     <thead>
     <tr>
         <td>Report Date</td>
+        <td>Report Time</td>
         <td>Symbol</td>
         <td>Name</td>
         <td>Sector</td>
@@ -22,7 +23,7 @@
         <td>EPS</td>
         <td>EPS Forecast</td>
         <td>EPS Surprise</td>
-        <td>Price ER Day</td>
+        <td>Price(ER)</td>
         <td>Day 1 Price Change%</td>
         <td>Day 2 Price Change%</td>
         <td>Two Days Price Change%</td>
@@ -32,6 +33,7 @@
     <% companyList.forEach(function(oneCompany){ %>
     <tr>
         <td><%= oneCompany.rdate %></td>
+        <td><%= oneCompany.erdetails %></td>
         <td><a href="https://www.zacks.com/stock/chart/<%= oneCompany.symbol %>/price-consensus-eps-surprise-chart %>" target="_blank"><%= oneCompany.symbol %></a></td>
         <td><%= oneCompany.name %></td>
         <td><%= oneCompany.sector %></td>
