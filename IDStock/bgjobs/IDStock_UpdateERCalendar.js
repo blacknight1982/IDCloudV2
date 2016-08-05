@@ -29,7 +29,7 @@ async.series({
             }
             else {
             	symbolArray = rows;
-            	symbolArray = symbolArray.slice(0,2);
+            	//symbolArray = symbolArray.slice(0,2);
             	logger.log('info',symbolArray);
             }
             cbGlobal();
@@ -56,7 +56,7 @@ async.series({
             }
             else {
             	symbolArray = rows;
-            	symbolArray = symbolArray.slice(0,2);
+            	//symbolArray = symbolArray.slice(0,2);
             }
             cbGlobal();
         });
