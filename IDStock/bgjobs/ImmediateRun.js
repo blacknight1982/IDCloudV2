@@ -18,8 +18,8 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 	  } else {
 		  //IDStock_UpdateERHistory();
 		  //IDStock_UpdateCompanyData();
-		  IDStock_UpdateCompanyPriceHistory();
+		  //IDStock_UpdateCompanyPriceHistory();
 		  //IDStock_UpdatePriceHistory();
-		  //IDStock_UpdateERCalendar();
+		  IDStock_UpdateERCalendar();
 	  }
 });

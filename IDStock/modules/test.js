@@ -4,7 +4,7 @@
 var yahoocompanydataquery = require('./yahoocompanydataquery');
 var quandlpricequeryhistoryforcompany = require('./quandlpricequeryhistoryforcompany');
 var yahoopricequeryhistoryforcompany = require('./yahoopricequeryhistoryforcompany');
-var nasdaqercalhistory = require('./nasdaqercalhistory');
+var nasdaqercal = require('./nasdaqercal');
 var async = require('async');
 var decaycalc = require('./decaycalc');
 var logger = require('./logger')(module);
@@ -16,11 +16,11 @@ var historyPriceArraySubject = [];
 
 //yahoopricequery(symbolArray,callback);
 
-yahoopricequeryhistoryforcompany('AAPL','2010-06-25','2016-07-27',callback)
+//yahoopricequeryhistoryforcompany('AAPL','2010-06-25','2016-07-27',callback)
 //nasdaqercalhistory('AAPL',callback);
 
 //yahoocompanydataquery(symbolArray,callback);
-
+nasdaqercal('AAPL',callback);
 
 function callback(array1){
 	start_date = new Date('2016-07-01');

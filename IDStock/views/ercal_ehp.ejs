@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<script src="/javascripts/jquery-1.12.3.min.js"></script>
+<script src="/javascripts/earningcal_ehp.js"></script>
+<script src="/javascripts/sorttable.js"></script>
+
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body onload="calChange()">
+<%include templates/header.ejs%>
+<table>
+	<td>
+		Please enter a date in the future:
+	</td>
+	<td>
+		<input type="date" id="inputCalDate" onchange="calChange()" value="<%=(new Date()).toLocaleDateString()%>">
+	</td>
+</table>
+
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<table id="tab_companies" class="sortable">
+    <thead>
+    <tr>
+        <td>Symbol</td>
+        <td>Name</td>
+        <td>Market Cap(M)</td>
+        <td>Sector</td>
+        <td>Industry</td>
+        <td>Current Share Price</td>
+        <td>PE</td>
+        <td>EPS</td>
+        <td>ER Time</td>
+    </tr>
+    </thead>
+    <tbody id="tab_companies_body">
+    
+    </tbody>
+</table>
+</body>
+</html>
