@@ -33,14 +33,9 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  }, true
 		  );
 
-		  var IDStock_UpdateERCalendarJob = new CronJob('00 00 01 * * 7', IDStock_UpdateERCalendar, function() {
+		  var IDStock_UpdateERCalendarJob = new CronJob('00 00 04 * * 2-6', IDStock_UpdateERCalendar, function() {
 		  	console.log('IDStock_UpdateERCalendar job stopped');
 		  }, true
-		  );
-		  
-		  var IDStock_UpdateERHistoryJob = new CronJob('00 00 02 * * 7', IDStock_UpdateERHistory, function() {
-			  	console.log('IDStock_UpdateERCalendar job stopped');
-			  }, true
 		  );
 	  }
 	});

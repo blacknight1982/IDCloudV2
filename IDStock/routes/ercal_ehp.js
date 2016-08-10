@@ -20,7 +20,7 @@ router.get('/:date', function (req, res, next) {
 	logger.log('info',dateString);
 	logger.log('info',nextDateString);
 	
-    var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps,industry_return,sample_count FROM company_tickers_ercal where ((erdate = '" + dateString + "' and erdetails like '%after%') or (erdate = '" + nextDateString + "' and erdetails like '%before%')) and industry_return>=1.5";
+    var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps,industry_return,z_val,sample_count FROM company_tickers_ercal where ((erdate = '" + dateString + "' and erdetails like '%after%') or (erdate = '" + nextDateString + "' and erdetails like '%before%')) and industry_return>=1.5";
     logger.log('info',queryString);
     
     db.get().query(queryString, function(err, rows, fields) {

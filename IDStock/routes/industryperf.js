@@ -12,7 +12,7 @@ var db = require('../modules/db');
 /* GET home page. */
 router.get('/', function (req, res, next) {
 	
-	var queryString = "SELECT industry, avg(100+percent_twoday)-100 as 'return', std(100+percent_twoday) as 'std', count(*) as 'count' FROM idstock.company_tickers_ercal_history where rdate >= DATE_SUB(NOW(), INTERVAL 2 MONTH) group by industry";
+	var queryString = "SELECT * from industry_perf";
 	db.get().query(queryString, function(err, rows, fields) {
     	if (err) {
             logger.log('error',err);
