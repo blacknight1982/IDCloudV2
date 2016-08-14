@@ -29,7 +29,7 @@ async.series({
             }
             else {
             	symbolArray = rows;
-            	//symbolArray = symbolArray.slice(0,2);
+            	//symbolArray = symbolArray.slice(0,1);
             	logger.log('info',symbolArray);
             }
             cbGlobal();
@@ -130,24 +130,32 @@ function queryPriceHistoryIntoDB(cbGlobal){
 		    step3: function(cbGlobal2){
 		    	logger.log("info","Step 3");
 		    	var j = priceArray.length-1;
-		    	for(var i=0;i<erDates.length;i++){
-		    		for(;j>=0;j--){
-		    			if(erDates[i].rdate.toLocaleString().slice(0,10) === priceArray[j].date){
-		    				var queryString = "UPDATE company_ercal_history set price_last = "+ 
-		    				priceArray[j+1].adjClose + ", price_erday = " + priceArray[j].adjClose + ", price_next = " + 
-		    				priceArray[j-1].adjClose + ", last_update = '" + dateTodayString + "'"
-		    				+ " where symbol = '" + currentSymbol.symbol+"' and rdate = '" + erDates[i].rdate.toLocaleString().slice(0,10) +"'";
-		    				logger.log("info",queryString);
-		    				
-		    				db.get().query(queryString, function (error, rows, results) {
-			                	if (error) {
-			                        logger.log('error',error);
-			                        throw error;
-			                	}
-			                });
-		    				break;
-		    			}
-		    		}
+		    	try{
+			    	for(var i=0;i<erDates.length;i++){
+			    		for(;j>=0;j--){
+			    			if(erDates[i].rdate.toLocaleString().slice(0,10) === priceArray[j].date){
+			    				var queryString = "UPDATE company_ercal_history set price_last = "+ priceArray[j+1].close + 
+			    				", open_erday = " + priceArray[j].open +
+			    				", price_erday = " + priceArray[j].close + 
+			    				", open_next = " + priceArray[j-1].open +
+			    				", price_next = " + priceArray[j-1].close + 
+			    				", last_update = '" + dateTodayString + "'"
+			    				+ " where symbol = '" + currentSymbol.symbol+"' and rdate = '" + erDates[i].rdate.toLocaleString().slice(0,10) +"'";
+			    				logger.log("info",queryString);
+			    				
+			    				db.get().query(queryString, function (error, rows, results) {
+				                	if (error) {
+				                        logger.log('error',error);
+				                        throw error;
+				                	}
+				                });
+			    				break;
+			    			}
+			    		}
+			    	}
+		    	}
+		    	catch(err){
+		    		logger.log("error",err);
 		    	}
 		    	cbGlobal2();
 		    }
