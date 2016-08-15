@@ -52,6 +52,9 @@ function triggerTableRender2() {
 				"</td><td>" + data.er_companies[i].pe + 
 				"</td><td>" + data.er_companies[i].eps + 
 				"</td><td><a href='http://www.nasdaq.com/earnings/report/" + data.er_companies[i].symbol + "' target='_blank'>" + data.er_companies[i].erdetails + 
+				"</td><td>" + data.er_companies[i].industry_return + 
+				"</td><td>" + data.er_companies[i].z_val + 
+				"</td><td>" + data.er_companies[i].sample_count + 
 				"</a></td></tr>";
 			});
 
