@@ -6,12 +6,14 @@ var quandlpricequeryhistoryforcompany = require('./quandlpricequeryhistoryforcom
 var yahoopricequeryhistoryforcompany = require('./yahoopricequeryhistoryforcompany');
 var nasdaqercal = require('./nasdaqercal');
 var IDStock_UpdateCustomCompany = require('./IDStock_UpdateCustomCompany');
+var yqlcompanydataquery = require('./yqlcompanydataquery');
 var async = require('async');
 var decaycalc = require('./decaycalc');
 var logger = require('./logger')(module);
 var db = require('./db');
 
 var symbolArray=[{symbol:'AAPL'},{symbol:'GOOG'},{symbol:'NUGT'},{symbol:'GDX'},{symbol:'NRZ'},{symbol:'UWTI'}];
+var symbolArray2=[{symbol:'1234'}];
 var historyPriceArrayTarget = [];
 var historyPriceArraySubject = [];
 
@@ -33,9 +35,11 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  //IDStock_UpdateCompanyPriceHistory();
 		  //IDStock_UpdatePriceHistory();
 		  //IDStock_UpdateERCalendar();
-		  IDStock_UpdateCustomCompany('1234',callback);
+		  IDStock_UpdateCustomCompany('AAPL',callback);
 	  }
 });
+
+//yqlcompanydataquery(symbolArray2,callback);
 
 
 function callback(array1){
