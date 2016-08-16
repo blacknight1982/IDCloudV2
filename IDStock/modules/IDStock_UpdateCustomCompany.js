@@ -47,7 +47,7 @@ var IDStock_UpdateCustomCompany = function(symbol, callback){
 		step0: function(cbGlobal){
 			yqlcompanydataquery(symbolArray,function(returnArray){
 				logger.log("info",returnArray);
-				if((returnArray.length>0)&&returnArray[0].name === ''){
+				if((returnArray.length>0)&&returnArray[0].ebitda === ''){
 					insertSymbol = false;
 					cbGlobal();
 				}
