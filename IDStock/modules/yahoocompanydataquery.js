@@ -21,6 +21,7 @@ var symbolResultArray = [];
 function query(symbolObjectArray, callback){
 	
 	// All of these arguments are optional.
+	symbolResultArray = [];
 	var csvReadOptions = {
 	    delimiter: ',', // default is ,
 	    endLine: '\n', // default is \n,

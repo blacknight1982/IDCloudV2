@@ -7,6 +7,7 @@ var db = require('./modules/db');
 var ercal = require('./routes/ercal');
 var ercal_ehp = require('./routes/ercal_ehp');
 var ercalhistory = require('./routes/ercalhistory');
+var custom = require('./routes/custom');
 var industryperf = require('./routes/industryperf');
 
 var app = express();
@@ -34,6 +35,7 @@ app.use('/trading/ercalehp', ercal_ehp);
 app.use('/trading/decay', decay);
 app.use('/trading/ercalhistory', ercalhistory);
 app.use('/trading/industryperf', industryperf);
+app.use('/trading/custom', custom);
 app.all('/trading/*', accesslog);
 
 //app.get('/', routes.index);

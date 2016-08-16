@@ -14,6 +14,7 @@
     "async":"*",
     "winston":"*",
     "cheerio":"*",
-    "cron":"*"
+    "cron":"*",
+    "xml2js":"*"
   }
 }

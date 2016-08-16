@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<script src="/javascripts/jquery-1.12.3.min.js"></script>
+<script src="/javascripts/custom.js"></script>
+<script src="/javascripts/sorttable.js"></script>
+<script src="/javascripts/utility.js"></script>
+
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+<%include templates/header.ejs%>
+<div id="lockPane"></div>
+<table>
+	<td>
+		Please add custom stock here:
+	</td>
+	<td>
+		<input id="inputCustom" />
+	</td>
+	<td>
+		<button id="submitCustom">Submit</button>
+	</td>
+</table>
+
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<table id="tab_companies" class="sortable">
+    <thead>
+	    <tr>
+	        <td>Symbol</td>
+	        <td>Name</td>
+	        <td>Market Cap(M)</td>
+	        <td>Sector</td>
+	        <td>Industry</td>
+	        <td>Current Share Price</td>
+	        <td>PE</td>
+	        <td>EPS</td>
+	        <td>ER Time</td>
+	    </tr>
+    </thead>
+    <tbody id="tab_companies_body">
+    	
+    </tbody>
+</table>
+
+</body>
+</html>

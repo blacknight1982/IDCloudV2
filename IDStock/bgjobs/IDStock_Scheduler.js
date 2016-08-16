@@ -6,7 +6,6 @@ var CronJob = require('cron').CronJob;
 var IDStock_UpdateCompanyData = require('./IDStock_UpdateCompanyData');
 var IDStock_UpdatePriceHistory = require('./IDStock_UpdatePriceHistory');
 var IDStock_UpdateERCalendar = require('./IDStock_UpdateERCalendar');
-var IDStock_UpdateERHistory = require('./IDStock_UpdateERHistory');
 var db = require('../modules/db');
 
 
