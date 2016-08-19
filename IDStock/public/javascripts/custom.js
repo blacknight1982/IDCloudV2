@@ -45,6 +45,19 @@ function triggerTableRender() {
 
 			$.each(data.er_companies, function(i, item) {
 
+				var erHistoryTableString = "<table><thead><tr><td>Date</td><td>EPS</td><td>EPSF</td><td>Surprise</td><td>Change</td></tr></thead><tbody>";
+				
+				$.each(data.er_companies[i].erHistory, function(j, itemJ) {
+					erHistoryTableString += "<tr><td>" + itemJ.rdate +
+					"</td><td>" + itemJ.eps + 
+					"</td><td>" + itemJ.epsf +
+					"</td><td>" + itemJ.surprise +
+					"</td><td>" + itemJ.percent_twoday +
+					"</td></tr>";
+				});
+				erHistoryTableString += "</tbody></table>";
+				console.log(erHistoryTableString);
+				
 				trHTML += "<tr><td><a href='https://www.zacks.com/stock/chart/" + data.er_companies[i].symbol + "/price-consensus-eps-surprise-chart' target='_blank'>"+data.er_companies[i].symbol + 
 				"</a></td><td>" + data.er_companies[i].name + 
 				"</td><td>" + data.er_companies[i].market_cap + 
@@ -54,7 +67,11 @@ function triggerTableRender() {
 				"</td><td>" + data.er_companies[i].pe + 
 				"</td><td>" + data.er_companies[i].eps + 
 				"</td><td><a href='http://www.nasdaq.com/earnings/report/" + data.er_companies[i].symbol + "' target='_blank'>" + data.er_companies[i].erdetails + 
-				"</a></td></tr>";
+				"</a></td><td>" + erHistoryTableString + 
+				"</td></tr>";
+				
+				
+				
 			});
 
 			$('#tab_companies_body').html(trHTML);
