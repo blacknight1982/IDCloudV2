@@ -16,10 +16,19 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 	    console.log('Unable to connect to MySQL.');
 	    process.exit(1);
 	  } else {
+		  //done 04/30
 		  //IDStock_UpdateCompanyData();
+		  
+		  //error 05/02
 		  //IDStock_UpdateCompanyPriceHistory();
+		  
+		  //done 05/02
 		  //IDStock_UpdatePriceHistory();
+		  
+		  //done 05/01
 		  //IDStock_UpdateERCalendar();
-		  IDStock_UpdateCompanies();
+		  
+		  //done 04/30
+		  //IDStock_UpdateCompanies();
 	  }
 });

@@ -12,8 +12,10 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/:date', function (req, res, next) {
-    var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps,industry_return,z_val,sample_count FROM company_tickers_ercal where erdate = '" + req.params.date + "'"
-    logger.log('info',queryString);
+    //var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps,industry_return,z_val,sample_count FROM company_tickers_ercal where erdate = '" + req.params.date + "'"
+	var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps FROM company_tickers_ercal where erdate = '" + req.params.date + "'"
+    
+	logger.log('info',queryString);
     
     db.get().query(queryString, function(err, rows, fields) {
         if (err) throw err;
