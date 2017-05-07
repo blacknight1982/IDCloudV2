@@ -1,19 +1,23 @@
 /**
- * quandlpricequeryhistoryforcompany - Query stock history price from 
- * https://www.quandl.com/api/v3/datasets/WIKI/<symbol>.csv
+ * yahoopricequeryhistory - Query stock history price from 
+ * http://ichart.finance.yahoo.com/table.csv?s=<symbol>
  * Author John Liu
- * 07/27/2016
+ * 04/30/2016
  */
 
 var request = require('request');
-var logger = require('../modules/logger')(module);
+var logger = require('../../modules/logging/logger')(module);
 var async = require('async');
 var csv_stream = require('csv-stream');
 
+var csvReadOptionsTicker = {
+		delimiter: ',', // default is ,
+	    endLine: '\n', // default is \n,
+	    columns: ['date', 'open', 'high', 'low', 'close', 'volume', 'adjClose']
+}
+
 /*
  * Input: symbol which is stock symbol
- * Input: start date in format of yyyy-mm-dd
- * Input: end date in format of yyyy-mm-dd
  * Output and callback:
  * callback will take the historyPriceArray as input  
  * historyPrice.date as date, 
@@ -26,28 +30,23 @@ var csv_stream = require('csv-stream');
  * historyPrice.adjClose as adjusted close price,
  */
 
-function queryHistory(symbol, start_date, end_date, callback){
-	var csvColumns = ['date', 'open', 'high', 'low', 'close', 'volume'];
-
-	var csvReadOptionsTicker = {
-			delimiter: ',', // default is ,
-		    endLine: '\n', // default is \n,
-		    columns: csvColumns
-	}
-	var url = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ symbol + '.csv?start_date='+start_date+'&end_date='+end_date;
+function queryHistory(symbol, callback){
+	var url = 'http://ichart.finance.yahoo.com/table.csv?s='+ symbol;
 	var historyPriceArray=[];
 	logger.log('info',url);
 	var csvStreamTicker = csv_stream.createStream(csvReadOptionsTicker);
 	request(url).pipe(csvStreamTicker)
 		.on('data', function (oneDayData) {
 			var historyPrice = {
-						date:oneDayData.date,
-						open:oneDayData.open,
-						high:oneDayData.high,
-						low:oneDayData.low,
-						close:oneDayData.close,
-						volume:oneDayData.volume
-					};
+					date:oneDayData.date,
+					open:oneDayData.open,
+					high:oneDayData.high,
+					low:oneDayData.low,
+					close:oneDayData.close,
+					settle:oneDayData.close,
+					volume:oneDayData.volume,
+					adjClose:oneDayData.adjClose
+				};
 			historyPriceArray.push(historyPrice);
         })
         .on('end', function () {  

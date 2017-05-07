@@ -1,9 +1,15 @@
 /**
  * Module dependencies.
  */
-
-var express = require('express'), routes = require('./routes/index'), user = require('./routes/user'), decay = require('./routes/decay'), accesslog = require('./routes/accesslog'), http = require('http'), path = require('path');
-var db = require('./modules/db');
+require('events').EventEmitter.defaultMaxListeners = Infinity;
+var express = require('express'), 
+	routes = require('./routes/index'), 
+	user = require('./routes/user'), 
+	decay = require('./routes/decay'), 
+	accesslog = require('./routes/accesslog'), 
+	http = require('http'), 
+	path = require('path');
+var db = require('./modules/persistence/db');
 var ercal = require('./routes/ercal');
 var ercal_ehp = require('./routes/ercal_ehp');
 var ercalhistory = require('./routes/ercalhistory');

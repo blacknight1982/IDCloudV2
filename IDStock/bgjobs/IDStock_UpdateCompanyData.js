@@ -3,9 +3,9 @@
  */
 var request = require('request');
 var async = require("async");
-var yahoocompanydataquery = require('../modules/yahoocompanydataquery');
-var db = require('../modules/db.js');
-var logger = require('../modules/logger')(module);
+var yahoocompanydataquery = require('../modules/api/yahoocompanydataquery');
+var db = require('../modules/persistence/db');
+var logger = require('../modules/logging/logger')(module);
 
 var symbolArray = [];
 
@@ -50,9 +50,9 @@ function queryStockPriceIntoDB(cbGlobal){
 		async.eachSeries(symbolObjectArray,
 			function (currentSymbol, cbEachSymbol){
 				var dateToInsert = new Date(currentSymbol.last_tradingday);
-				var dateToInsertString = dateToInsert.toLocaleDateString().slice(0,10);
+				var dateToInsertString = dateToInsert.toISOString().slice(0,10);
 				var dateToday = new Date();
-				var dateTodayString = dateToday.toLocaleDateString().slice(0,10);
+				var dateTodayString = dateToday.toISOString().slice(0,10);
 				//var dividend = currentSymbol.dividend === 'N/A'? 0: currentSymbol.dividend;
 				//var pe = currentSymbol.pe === 'N/A'? 0: currentSymbol.pe;
 				//var eps = currentSymbol.eps === 'N/A'? 0: currentSymbol.eps;

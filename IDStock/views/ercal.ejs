@@ -15,7 +15,7 @@
 		Please enter a date in the future:
 	</td>
 	<td>
-		<input type="date" id="inputCalDate" onchange="calChange()" value="<%=(new Date()).toLocaleDateString()%>">
+		<input type="date" id="inputCalDate" onchange="calChange()" value="<%=(new Date()).toISOString().slice(0,10)%>">
 	</td>
 </table>
 

@@ -1,9 +1,9 @@
 /**
  * Created by John Liu on 05/16/2016.
  */
-var logger = require('../modules/logger')(module);
+var logger = require('../modules/logging/logger')(module);
 var async = require('async');
-var db = require('../modules/db');
+var db = require('../modules/persistence/db');
 
 
 

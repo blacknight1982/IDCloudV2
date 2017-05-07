@@ -2,10 +2,10 @@
  * Created by John Liu on 05/04/2016.
  */
 var async = require("async");
-var yahoopricequeryhistory = require('../modules/yahoopricequeryhistory');
-var quandlpricequeryhistory = require('../modules/quandlpricequeryhistory');	
-var db = require('../modules/db.js');
-var logger = require('../modules/logger')(module);
+var yahoopricequeryhistory = require('../modules/api/yahoopricequeryhistory');
+var quandlpricequeryhistory = require('../modules/api/quandlpricequeryhistory');	
+var db = require('../modules/persistence/db');
+var logger = require('../modules/logging/logger')(module);
 	
 var priceSourceArray=[];
 	

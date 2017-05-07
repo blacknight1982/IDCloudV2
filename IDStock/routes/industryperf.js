@@ -3,10 +3,10 @@
  */
 
 var express = require('express');
-var logger = require('../modules/logger')(module);
+var logger = require('../modules/logging/logger')(module);
 var async = require('async');
 var router = express();
-var db = require('../modules/db');
+var db = require('../modules/persistence/db');
 
 
 /* GET home page. */

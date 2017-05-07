@@ -3,18 +3,18 @@
  */
 var request = require('request');
 var async = require("async");
-var db = require('./db.js');
-var logger = require('./logger')(module);
-var yahoocompanydataquery = require('./yahoocompanydataquery');
-var nasdaqercal = require('./nasdaqercal');
-var yahoocompanydataquery = require('./yahoocompanydataquery');
-var yahoopricequeryhistoryforcompany = require('./yahoopricequeryhistoryforcompany');
-var yqlcompanydataquery = require('./yqlcompanydataquery');
+var db = require('./persistence/db.js');
+var logger = require('./logging/logger')(module);
+var yahoocompanydataquery = require('./api/yahoocompanydataquery');
+var nasdaqercal = require('./api/nasdaqercal');
+var yahoocompanydataquery = require('./api/yahoocompanydataquery');
+var yahoopricequeryhistoryforcompany = require('./api/yahoopricequeryhistoryforcompany');
+var yqlcompanydataquery = require('./api/yqlcompanydataquery');
 
 var customCompanyData;
 var symbolArray = [];
 var dateToday = new Date();
-var dateTodayString = dateToday.toLocaleDateString().slice(0,10);
+var dateTodayString = dateToday.toISOString().slice(0,10);
 
 
 /*	Input: symbol which is stock symbol
@@ -88,7 +88,7 @@ var IDStock_UpdateCustomCompany = function(symbol, callback){
 		    		async.eachSeries(symbolObjectArray,
 		    			function (currentSymbol, cbEachSymbol){
 		    				var dateToInsert = new Date(currentSymbol.last_tradingday);
-		    				var dateToInsertString = dateToInsert.toLocaleDateString().slice(0,10);
+		    				var dateToInsertString = dateToInsert.toISOString().slice(0,10);
 		    				
 		    				var queryString = "INSERT into company_data (symbol, price, dividend, pe, eps, last_tradingday, last_update) values ('"
 		    					+ currentSymbol.symbol + "'," + currentSymbol.price + ",'" + currentSymbol.dividend + "','" + currentSymbol.pe + "','" + currentSymbol.eps + "','" + dateToInsertString + "','"+dateTodayString+"')"
@@ -225,8 +225,8 @@ function queryPriceHistoryIntoDB(cbGlobal){
 			            	end_date = new Date(rows[rows.length-1].rdate);
 			            	start_date.setDate(start_date.getDate() - 7);
 			            	end_date.setDate(end_date.getDate() + 7);
-			            	start_date = start_date.toLocaleString().slice(0,10);
-			            	end_date = end_date.toLocaleString().slice(0,10);	
+			            	start_date = start_date.toISOString().slice(0,10);
+			            	end_date = end_date.toISOString().slice(0,10);	
 		            	}
 		            }
 		            cbGlobal2();
@@ -252,14 +252,14 @@ function queryPriceHistoryIntoDB(cbGlobal){
 		    	try{
 			    	for(var i=0;i<erDates.length;i++){
 			    		for(;j>=0;j--){
-			    			if(erDates[i].rdate.toLocaleString().slice(0,10) === priceArray[j].date){
+			    			if(erDates[i].rdate.toISOString().slice(0,10) === priceArray[j].date){
 			    				var queryString = "UPDATE company_ercal_history set price_last = "+ priceArray[j+1].close + 
 			    				", open_erday = " + priceArray[j].open +
 			    				", price_erday = " + priceArray[j].close + 
 			    				", open_next = " + priceArray[j-1].open +
 			    				", price_next = " + priceArray[j-1].close + 
 			    				", last_update = '" + dateTodayString + "'"
-			    				+ " where symbol = '" + currentSymbol.symbol+"' and rdate = '" + erDates[i].rdate.toLocaleString().slice(0,10) +"'";
+			    				+ " where symbol = '" + currentSymbol.symbol+"' and rdate = '" + erDates[i].rdate.toISOString().slice(0,10) +"'";
 			    				logger.log("info",queryString);
 			    				
 			    				db.get().query(queryString, function (error, rows, results) {

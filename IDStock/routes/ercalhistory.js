@@ -4,9 +4,9 @@
 
 var express = require('express');
 var async = require("async");
-var logger = require('../modules/logger')(module);
+var logger = require('../modules/logging/logger')(module);
 var router = express();
-var db = require('../modules/db');
+var db = require('../modules/persistence/db');
 
 /* GET home page. */
 router.get('/:industry', function (req, res, next) {
@@ -26,7 +26,7 @@ router.get('/:industry', function (req, res, next) {
 	            if (err) throw err;
 
 	            for (var i in rows) {
-	                rows[i].rdate = rows[i].erdate.toLocaleString().slice(0,10);
+	                rows[i].rdate = rows[i].erdate.toISOString().slice(0,10);
 	                rows[i].price_erday = rows[i].price;
 	                companyRows.push(rows[i]);
 	            }
@@ -45,7 +45,7 @@ router.get('/:industry', function (req, res, next) {
 	            if (err) throw err;
 
 	            for (var i in rows) {
-	                rows[i].rdate = rows[i].rdate.toLocaleString().slice(0,10);
+	                rows[i].rdate = rows[i].rdate.toISOString().slice(0,10);
 	                companyRows.push(rows[i]);
 	            }
 	            logger.log('info',rows);

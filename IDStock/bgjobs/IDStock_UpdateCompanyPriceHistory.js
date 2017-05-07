@@ -2,15 +2,15 @@
  * Created by John Liu on 08/03/2016.
  */
 var async = require("async");
-var yahoopricequeryhistoryforcompany = require('../modules/yahoopricequeryhistoryforcompany');
-var db = require('../modules/db.js');
-var logger = require('../modules/logger')(module);
+var yahoopricequeryhistoryforcompany = require('../modules/api/yahoopricequeryhistoryforcompany');
+var db = require('../modules/persistence/db');
+var logger = require('../modules/logging/logger')(module);
 	
 var priceSourceArray=[];
 var dateToday = new Date();
-var dateTodayString = dateToday.toLocaleDateString().slice(0,10);
+var dateTodayString = dateToday.toISOString().slice(0,10);
 dateToday.setDate(dateToday.getDate() - 366);
-var oneYearBeforeString = dateToday.toLocaleDateString().slice(0,10);
+var oneYearBeforeString = dateToday.toISOString().slice(0,10);
 	
 var IDStock_UpdateCompanyPriceHistory = function(){
 	

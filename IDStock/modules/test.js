@@ -1,16 +1,17 @@
 /**
  * New node file
  */
-var yahoocompanydataquery = require('./yahoocompanydataquery');
-var quandlpricequeryhistoryforcompany = require('./quandlpricequeryhistoryforcompany');
-var yahoopricequeryhistoryforcompany = require('./yahoopricequeryhistoryforcompany');
-var nasdaqercal = require('./nasdaqercal');
-var IDStock_UpdateCustomCompany = require('./IDStock_UpdateCustomCompany');
-var yqlcompanydataquery = require('./yqlcompanydataquery');
+
 var async = require('async');
-var decaycalc = require('./decaycalc');
-var logger = require('./logger')(module);
-var db = require('./db');
+var yahoocompanydataquery = require('./api/yahoocompanydataquery');
+var quandlpricequeryhistoryforcompany = require('./api/quandlpricequeryhistoryforcompany');
+var yahoopricequeryhistoryforcompany = require('./api/yahoopricequeryhistoryforcompany');
+var nasdaqercal = require('./api/nasdaqercal');
+var IDStock_UpdateCustomCompany = require('./IDStock_UpdateCustomCompany');
+var yqlcompanydataquery = require('./api/yqlcompanydataquery');
+var decaycalc = require('./technical/decaycalc');
+var logger = require('./logging/logger')(module);
+var db = require('./persistence/db');
 
 var symbolArray=[{symbol:'AAPL'},{symbol:'GOOG'},{symbol:'NUGT'},{symbol:'GDX'},{symbol:'NRZ'},{symbol:'UWTI'}];
 var symbolArray2=[{symbol:'1234'}];
@@ -47,8 +48,8 @@ function callback(array1){
 	end_date = new Date('2016-09-05');
 	start_date.setDate(start_date.getDate() - 7);
 	end_date.setDate(end_date.getDate() + 7);
-	start_date = start_date.toLocaleString().slice(0,10);
-	end_date = end_date.toLocaleString().slice(0,10);
+	start_date = start_date.toISOString().slice(0,10);
+	end_date = end_date.toISOString().slice(0,10);
 	console.log(array1);
 	console.log(start_date);
 	console.log(end_date);

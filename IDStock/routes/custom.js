@@ -3,9 +3,9 @@
  */
 
 var express = require('express');
-var logger = require('../modules/logger')(module);
+var logger = require('../modules/logging/logger')(module);
 var router = express();
-var db = require('../modules/db');
+var db = require('../modules/persistence/db');
 var async = require("async");
 var IDStock_UpdateCustomCompany = require('../modules/IDStock_UpdateCustomCompany');
 
@@ -21,7 +21,7 @@ router.get('/all', function (req, res, next) {
         if (err) throw err;
 
         async.eachSeries(rows,function (row, cbEachRow){
-        	row.erdate = row.erdate.toLocaleString().slice(0,10);
+        	row.erdate = row.erdate.toISOString().slice(0,10);
         	row.market_cap = Math.floor(row.market_cap);
         	var companyRows = [];
         	var queryStringHistory = "SELECT rdate ,eps, epsf, surprise, price_last, price_erday, price_next,percent_day1,percent_day2,percent_twoday FROM idstock.company_tickers_ercal_history where symbol = '" + row.symbol  +"' order by rdate desc";
@@ -30,7 +30,7 @@ router.get('/all', function (req, res, next) {
 	            if (err) throw err;
 
 	            for (var i in historyRows) {
-	            	historyRows[i].rdate = historyRows[i].rdate.toLocaleString().slice(0,10);
+	            	historyRows[i].rdate = historyRows[i].rdate.toISOString().slice(0,10);
 	                companyRows.push(historyRows[i]);
 	            }
 	            row.erHistory = companyRows;

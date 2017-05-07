@@ -25,6 +25,6 @@ function getLabel(callingModule) {
 }
 
 function getLoggingDir(){
-	return __dirname+'/../log';
+	return __dirname+'/../../log';
 	
 }

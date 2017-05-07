@@ -16,7 +16,7 @@ exports.connect = function(mode, done) {
   state.pool = mysql.createPool({
     host: 'idclouddb.c6plrus4qs6e.us-west-1.rds.amazonaws.com',
     user: 'idclouddb',
-    password: 'lulu19541021',
+    password: 'idclouddb123',
     database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB
   });
 

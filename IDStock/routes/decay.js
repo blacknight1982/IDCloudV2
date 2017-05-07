@@ -3,11 +3,11 @@
  */
 
 var express = require('express');
-var logger = require('../modules/logger')(module);
+var logger = require('../modules/logging/logger')(module);
 var async = require('async');
-var decaycalc = require('../modules/decaycalc');
+var decaycalc = require('../modules/technical/decaycalc');
 var router = express();
-var db = require('../modules/db');
+var db = require('../modules/persistence/db');
 
 
 /* GET home page. */
@@ -90,9 +90,9 @@ router.post('/', function (req, res, next) {
 			            logger.log('error',err);
 			        }
 			        for(var i=0;i<rows.length;i++){
-			    		var colume = [rows[i].date.toLocaleString().slice(0,10), rows[i].adj_close];
+			    		var colume = [rows[i].date.toISOString().slice(0,10), rows[i].adj_close];
 			    		var dailyValue = {
-			    				date: rows[i].date.toLocaleString().slice(0,10),
+			    				date: rows[i].date.toISOString().slice(0,10),
 			    				price: rows[i].adj_close
 			    		};
 			    		response.target.push(colume);
@@ -115,9 +115,9 @@ router.post('/', function (req, res, next) {
 				            logger.log('error',err);
 				        }
 				        for(var i=0;i<rows.length;i++){
-				    		var colume = [rows[i].date.toLocaleString().slice(0,10), rows[i].adj_close];
+				    		var colume = [rows[i].date.toISOString().slice(0,10), rows[i].adj_close];
 				    		var dailyValue = {
-				    				date: rows[i].date.toLocaleString().slice(0,10),
+				    				date: rows[i].date.toISOString().slice(0,10),
 				    				price: rows[i].adj_close
 				    		};
 				    		response.subject.push(colume);

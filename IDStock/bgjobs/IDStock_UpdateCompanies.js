@@ -5,8 +5,8 @@
 var request = require('request');
 var csv_stream = require('csv-stream');
 var async = require('async');
-var db = require('../modules/db.js');
-var logger = require('../modules/logger')(module);
+var db = require('../modules/persistence/db');
+var logger = require('../modules/logging/logger')(module);
 
 var companyArray = [];
 var companyArrayCleansed = [];
@@ -109,7 +109,7 @@ function cleansingCompanyData(cblevel2){
 
 function outPutFilteredDataToDB_company_tickers(cblevel2) {
 	var dateToday = new Date();
-	var dateTodayString = dateToday.toLocaleDateString().slice(0,10);
+	var dateTodayString = dateToday.toISOString().slice(0,10);
     var queryString = "insert into company_tickers (symbol, name, market_cap, ipoyear, sector, industry, last_update) values ";
     for (var i = 0, len = companyArrayCleansed.length; i < len; i++) {
     	queryString = queryString + "('" + companyArrayCleansed[i].symbol + "','" + companyArrayCleansed[i].name + "'," + companyArrayCleansed[i].marketCap + ",'" +

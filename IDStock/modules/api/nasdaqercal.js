@@ -5,7 +5,7 @@
  */
 var request = require('request');
 var cheerio = require('cheerio');
-var logger = require('../modules/logger')(module);
+var logger = require('../../modules/logging/logger')(module);
 
 
 /*
