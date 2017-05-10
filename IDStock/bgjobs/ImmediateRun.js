@@ -27,12 +27,12 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  //IDStock_UpdatePriceHistory();
 		  
 		  //done 05/01
-		  IDStock_UpdateERCalendar();
+		  //IDStock_UpdateERCalendar();
 		  
 		  //done 04/30
 		  //IDStock_UpdateCompanies();
 		  
 		  //done 05/01
-		  //IDStock_UpdateERHistoryPrice();
+		  IDStock_UpdateERHistoryPrice();
 	  }
 });

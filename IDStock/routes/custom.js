@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/all', function (req, res, next) {
-	var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps FROM company_tickers_ercal where custom = 1 order by erdetails"
+	var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps FROM company_basic_ercal where custom = 1 order by erdetails"
     logger.log('info',queryString);
     
     db.get().query(queryString, function(err, rows, fields) {
@@ -24,7 +24,7 @@ router.get('/all', function (req, res, next) {
         	row.erdate = row.erdate.toISOString().slice(0,10);
         	row.market_cap = Math.floor(row.market_cap);
         	var companyRows = [];
-        	var queryStringHistory = "SELECT rdate ,eps, epsf, surprise, price_last, price_erday, price_next,percent_day1,percent_day2,percent_twoday FROM idstock.company_tickers_ercal_history where symbol = '" + row.symbol  +"' order by rdate desc";
+        	var queryStringHistory = "SELECT rdate ,eps, epsf, surprise, price_last, price_erday, price_next,percent_day1,percent_day2,percent_twoday FROM idstock.company_basic_ercal_history where symbol = '" + row.symbol  +"' order by rdate desc";
         	logger.log('info',queryStringHistory);	
         	db.get().query(queryStringHistory, function(err, historyRows, fields) {
 	            if (err) throw err;

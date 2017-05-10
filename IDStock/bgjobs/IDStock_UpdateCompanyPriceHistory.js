@@ -16,11 +16,11 @@ var IDStock_UpdateCompanyPriceHistory = function(){
 	
 	async.series({
 		/*
-		 * Step 0 - read all tickers from DB company_tickers
+		 * Step 0 - read all tickers from DB company_basic
 		 */
 	    step0: function(cbGlobal){
 	        
-	    	var queryString = 'SELECT symbol FROM company_tickers';
+	    	var queryString = 'SELECT symbol FROM company_basic';
 	    	db.get().query(queryString, function (error, rows, results) {
                 if (error) {
                     logger.log('error',error);

@@ -59,12 +59,12 @@ var IDStock_UpdateCustomCompany = function(symbol, callback){
 	    },
 	    
 		/*
-		 * Step 1 update custom company into company_tickers
+		 * Step 1 update custom company into company_basic
 		 */
 	    step1: function(cbGlobal){
 	    	if(insertSymbol){
 
-		    	var queryString = "insert into company_tickers (symbol, custom) values ('"+ symbol +"',1) ON DUPLICATE KEY UPDATE custom = 1";
+		    	var queryString = "insert into company_basic (symbol, custom) values ('"+ symbol +"',1) ON DUPLICATE KEY UPDATE custom = 1";
 		    	logger.log('info',queryString);
 		    	db.get().query(queryString, function (error, rows, results) {
 	                if (error) {

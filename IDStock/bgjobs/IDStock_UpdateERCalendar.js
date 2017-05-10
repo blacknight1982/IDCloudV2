@@ -16,11 +16,11 @@ var IDStock_UpdateERCalendar = function(){
 	
 async.series({
 	/*
-	 * Step 1 read all company symbols from DB company_tickers
+	 * Step 1 read all company symbols from DB company_basic
 	 */
     step1: function(cbGlobal){
         
-    	var queryString = 'SELECT symbol FROM company_tickers';
+    	var queryString = 'SELECT symbol FROM company_basic';
     	
     	db.get().query(queryString, function (error, rows, results) {
             if (error) {

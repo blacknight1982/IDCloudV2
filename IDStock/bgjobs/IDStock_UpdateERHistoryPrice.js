@@ -16,11 +16,11 @@ var IDStock_UpdateERHistoryPrice = function(){
 	
 async.series({
 	/*
-	 * Step 1 read all company symbols from DB company_tickers
+	 * Step 1 read all company symbols from DB company_basic
 	 */
     step1: function(cbGlobal){
         
-    	var queryString = 'SELECT symbol FROM company_tickers';
+    	var queryString = 'SELECT symbol FROM company_basic';
     	
     	db.get().query(queryString, function (error, rows, results) {
             if (error) {
@@ -126,9 +126,10 @@ function queryPriceHistoryIntoDB(cbGlobal){
 		    	try{
 			    	for(var i=0;i<erDates.length;i++){
 			    		for(;j>=0;j--){
-			    			if(erDates[i].rdate.toISOString().slice(0,10) === priceArray[j].date){
-			    				var queryString = "UPDATE company_ercal_history set price_last = "+ priceArray[j+1].close + 
-			    				", open_erday = " + priceArray[j].open +
+			    			if((erDates[i].rdate.toISOString().slice(0,10) === priceArray[j].date) || 
+			    			(erDates[i].rdate <= new Date(priceArray[j].date)))
+			    			{
+			    				var queryString = "UPDATE company_ercal_history set open_erday = " + priceArray[j].open +
 			    				", price_erday = " + priceArray[j].close + 
 			    				", open_next = " + priceArray[j-1].open +
 			    				", price_next = " + priceArray[j-1].close + 

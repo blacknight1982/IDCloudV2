@@ -51,7 +51,7 @@ var IDStock_UpdateCompanies = function(){
 	        	 */
 	            step1: function(cblevel2){
 	                
-	                var queryString = "delete from company_tickers";
+	                var queryString = "delete from company_basic";
 	                db.get().query(queryString, function (error, results) {
 	                    if (error) {
 	                        logger.log('error',error);
@@ -69,10 +69,10 @@ var IDStock_UpdateCompanies = function(){
 	            },
 	                    
 	            /*
-	             * Step3: update the DB company_tickers
+	             * Step3: update the DB company_basic
 	             */
 	            step3: function(cblevel2){
-	                outPutFilteredDataToDB_company_tickers(cblevel2);
+	                outPutFilteredDataToDB_company_basic(cblevel2);
 	            }
 	        },function (err, results) {
 	            logger.log('info','cb level2 all executed');
@@ -107,10 +107,10 @@ function cleansingCompanyData(cblevel2){
 }
 
 
-function outPutFilteredDataToDB_company_tickers(cblevel2) {
+function outPutFilteredDataToDB_company_basic(cblevel2) {
 	var dateToday = new Date();
 	var dateTodayString = dateToday.toISOString().slice(0,10);
-    var queryString = "insert into company_tickers (symbol, name, market_cap, ipoyear, sector, industry, last_update) values ";
+    var queryString = "insert into company_basic (symbol, name, market_cap, ipoyear, sector, industry, last_update) values ";
     for (var i = 0, len = companyArrayCleansed.length; i < len; i++) {
     	queryString = queryString + "('" + companyArrayCleansed[i].symbol + "','" + companyArrayCleansed[i].name + "'," + companyArrayCleansed[i].marketCap + ",'" +
     	companyArrayCleansed[i].ipoyear + "','" + companyArrayCleansed[i].sector + "','" + companyArrayCleansed[i].industry + "','" + dateTodayString +"'),";

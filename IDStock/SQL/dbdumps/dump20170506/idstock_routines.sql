@@ -18,14 +18,14 @@ USE `idstock`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Temporary view structure for view `company_tickers_ercal`
+-- Temporary view structure for view `company_basic_ercal`
 --
 
-DROP TABLE IF EXISTS `company_tickers_ercal`;
-/*!50001 DROP VIEW IF EXISTS `company_tickers_ercal`*/;
+DROP TABLE IF EXISTS `company_basic_ercal`;
+/*!50001 DROP VIEW IF EXISTS `company_basic_ercal`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `company_tickers_ercal` AS SELECT 
+/*!50001 CREATE VIEW `company_basic_ercal` AS SELECT 
  1 AS `symbol`,
  1 AS `name`,
  1 AS `market_cap`,
@@ -40,10 +40,10 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Final view structure for view `company_tickers_ercal`
+-- Final view structure for view `company_basic_ercal`
 --
 
-/*!50001 DROP VIEW IF EXISTS `company_tickers_ercal`*/;
+/*!50001 DROP VIEW IF EXISTS `company_basic_ercal`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -52,7 +52,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`idclouddb`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `company_tickers_ercal` AS select `company_earning_cal`.`symbol` AS `symbol`,`company_tickers`.`name` AS `name`,`company_tickers`.`market_cap` AS `market_cap`,`company_tickers`.`ipoyear` AS `ipoyear`,`company_tickers`.`sector` AS `sector`,`company_tickers`.`industry` AS `industry`,`company_earning_cal`.`erdate` AS `erdate`,`company_earning_cal`.`erdetails` AS `erdetails`,`company_data`.`price` AS `price`,`company_data`.`pe` AS `pe`,`company_data`.`eps` AS `eps` from ((`company_earning_cal` join `company_tickers` on((`company_earning_cal`.`symbol` = `company_tickers`.`symbol`))) join `company_data` on((`company_tickers`.`symbol` = convert(`company_data`.`symbol` using utf8)))) */;
+/*!50001 VIEW `company_basic_ercal` AS select `company_earning_cal`.`symbol` AS `symbol`,`company_basic`.`name` AS `name`,`company_basic`.`market_cap` AS `market_cap`,`company_basic`.`ipoyear` AS `ipoyear`,`company_basic`.`sector` AS `sector`,`company_basic`.`industry` AS `industry`,`company_earning_cal`.`erdate` AS `erdate`,`company_earning_cal`.`erdetails` AS `erdetails`,`company_data`.`price` AS `price`,`company_data`.`pe` AS `pe`,`company_data`.`eps` AS `eps` from ((`company_earning_cal` join `company_basic` on((`company_earning_cal`.`symbol` = `company_basic`.`symbol`))) join `company_data` on((`company_basic`.`symbol` = convert(`company_data`.`symbol` using utf8)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
