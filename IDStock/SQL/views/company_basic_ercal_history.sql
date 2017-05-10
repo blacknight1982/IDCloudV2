@@ -8,6 +8,7 @@ VIEW `company_basic_ercal_history` AS
         `company_ercal_history`.`symbol` AS `symbol`,
         `company_basic`.`name` AS `name`,
         `company_basic`.`sector` AS `sector`,
+        `company_basic`.`industry` AS `industry`,
         `company_basic`.`market_cap` AS `market_cap`,
         `company_ercal_history`.`eps` AS `eps`,
         `company_ercal_history`.`epsf` AS `epsf`,
