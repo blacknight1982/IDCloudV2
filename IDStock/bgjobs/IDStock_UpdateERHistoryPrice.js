@@ -40,7 +40,10 @@ async.series({
 	 * Step 2 select symbles with er price not updated  
 	 */
 	step2: function(cbGlobal){
-    	var queryString = "SELECT distinct symbol, price_erday FROM idstock.company_ercal_history  where price_erday IS NULL or last_update IS NULL group by symbol";
+    	var queryString = "SELECT distinct symbol, price_erday FROM idstock.company_ercal_history where price_erday IS NULL " +
+    			"or price_preer IS NULL " +
+    			"or last_update IS NULL " +
+    			"group by symbol";
     	logger.log("info",queryString);
     	db.get().query(queryString, function (error, rows, results) {
             if (error) {
@@ -113,7 +116,7 @@ function queryPriceHistoryIntoDB(cbGlobal){
 			    		priceArray = returnPriceArray;
 			    		cbGlobal2();
 			    	});
-		    	},5000);
+		    	},1000);
 
 		    },
 		    
@@ -126,10 +129,11 @@ function queryPriceHistoryIntoDB(cbGlobal){
 		    	try{
 			    	for(var i=0;i<erDates.length;i++){
 			    		for(;j>=0;j--){
-			    			if((erDates[i].rdate.toISOString().slice(0,10) === priceArray[j].date) || 
+			    			if((erDates[i].rdate.toISOString().slice(0,10) === priceArray[j].date)||
 			    			(erDates[i].rdate <= new Date(priceArray[j].date)))
 			    			{
-			    				var queryString = "UPDATE company_ercal_history set open_erday = " + priceArray[j].open +
+			    				var queryString = "UPDATE company_ercal_history set price_preer = "+ priceArray[j+1].close + 
+			    				", open_erday = " + priceArray[j].open +
 			    				", price_erday = " + priceArray[j].close + 
 			    				", open_next = " + priceArray[j-1].open +
 			    				", price_next = " + priceArray[j-1].close + 
