@@ -15,6 +15,7 @@
     "winston":"*",
     "cheerio":"*",
     "cron":"*",
-    "xml2js":"*"
+    "xml2js":"*",
+    "hashtable":"*"
   }
 }

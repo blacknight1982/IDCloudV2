@@ -9,15 +9,15 @@
 <body>
 <%include templates/header.ejs%>
 
-<h1>Industry ER Performance (3 month time window by default)</h1>
+<h1>Industry ER Performance (4 month time window by default)</h1>
 
 <table class="sortable">
     <thead>
     <tr>
         <td>Industry</td>
         <td>Average ER Day Return</td>
-        <td>Standard Deviation</td>
         <td>Z Value</td>
+        <td>Median Value</td>
         <td>Count of Samples</td>
     </tr>
     </thead>
@@ -25,10 +25,10 @@
     <% industries.forEach(function(oneIndustry){ %>
     <tr>
         <td><a href="/trading/ercalhistory/<%= encodeURIComponent(oneIndustry.industry)%>" target="_blank"><%= oneIndustry.industry %></td>
-        <td><%= oneIndustry.return %></td>
-        <td><%= oneIndustry.std %></td>
-        <td><%= oneIndustry.z_val %></td>
-        <td><%= oneIndustry.count %></td>
+        <td><%= oneIndustry.average_return %></td>
+        <td><%= oneIndustry.z_value %></td>
+        <td><%= oneIndustry.median_val %></td>
+        <td><%= oneIndustry.sample_count %></td>
     </tr>
     <% }); %>
     </tbody>

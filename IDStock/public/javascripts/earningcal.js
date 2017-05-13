@@ -55,6 +55,7 @@ function triggerTableRender2() {
 				"</td><td>" + data.er_companies[i].industry_return + 
 				"</td><td>" + data.er_companies[i].z_val + 
 				"</td><td>" + data.er_companies[i].sample_count + 
+				"</td><td>" + data.er_companies[i].median + 
 				"</a></td></tr>";
 			});
 
