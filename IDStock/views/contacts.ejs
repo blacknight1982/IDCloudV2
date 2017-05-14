@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  	<%include templates/header.ejs%>
+    <h1><%= title %></h1>
+    <table id="tab_contacts">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>E-Mail</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Yang Shen</td>
+        <td><a href="mailto:yang.shen.it@gmail.com" target="_top">yang.shen.it@gmail.com</a></td>
+    </tr>
+    <tr>
+        <td>John Liu</td>
+        <td><a href="mailto:blacknight1982@gmail.com" target="_top">blacknight1982@gmail.com</a></td>
+    </tr>
+    <tr>
+        <td>Mike Liu</td>
+        <td><a href="mailto:TBD@gmail.com" target="_top">TBD@gmail.com</a></td>
+    </tr>
+    
+    </tbody>
+</table>
+
+  </body>
+</html>

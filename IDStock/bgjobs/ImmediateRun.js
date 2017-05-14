@@ -18,19 +18,19 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 	    process.exit(1);
 	  } else {
 		  //done 04/30
+		  //IDStock_UpdateCompanies();
+		  
+		  //done 05/13
 		  //IDStock_UpdateCompanyData();
 		  
-		  //error 05/02
+		  //Don't execute
 		  //IDStock_UpdateCompanyPriceHistory();
 		  
-		  //done 05/02
+		  //done 05/13
 		  //IDStock_UpdatePriceHistory();
 		  
-		  //done 05/01
+		  //done 05/13
 		  //IDStock_UpdateERCalendar();
-		  
-		  //done 04/30
-		  //IDStock_UpdateCompanies();
 		  
 		  //done 05/01
 		  IDStock_UpdateERHistoryPrice();

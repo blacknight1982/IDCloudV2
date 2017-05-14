@@ -13,6 +13,7 @@ var db = require('./modules/persistence/db');
 var ercal = require('./routes/ercal');
 var ercal_ehp = require('./routes/ercal_ehp');
 var ercalhistory = require('./routes/ercalhistory');
+var contacts = require('./routes/contacts');
 var custom = require('./routes/custom');
 var industryperf = require('./routes/industryperf');
 
@@ -36,6 +37,7 @@ if ('development' == app.get('env')) {
 }
 
 app.use('/', routes);
+app.use('/contacts', contacts);
 app.use('/trading/ercal', ercal);
 app.use('/trading/ercalehp', ercal_ehp);
 app.use('/trading/decay', decay);
