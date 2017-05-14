@@ -58,7 +58,7 @@ async.each(requestURLs,
             step1: function(cblevel2){
                 mySQLPool.getConnection(function (err, conn) {
                     if (err) throw err;
-                    var queryString = "delete from company_tickers";
+                    var queryString = "delete from company_basic";
                     conn.query(queryString, function (error, results) {
                         if (error) {
                             logger.log('error',error);
@@ -85,7 +85,7 @@ async.each(requestURLs,
 );
 
 function outPutFilteredDataToDB(cblevel2) {
-    var queryString = "insert into company_tickers (symbol, name, market_cap, ipoyear, sector, industry) values ";
+    var queryString = "insert into company_basic (symbol, name, market_cap, ipoyear, sector, industry) values ";
     for (var i = 0, len = companyArray.length; i < len; i++) {
         var makcap = companyArray[i].marketCap;
         var lastChar = makcap.substr(makcap.length - 1);

@@ -1,12 +1,12 @@
 /**
- * yahoopricequeryhistory - Query stock history price from 
+ * yahoopricequeryhistoryforcompany - Query stock history price from 
  * http://ichart.finance.yahoo.com/table.csv?s=<symbol>
  * Author John Liu
  * 04/30/2016
  */
 
 var request = require('request');
-var logger = require('../modules/logger')(module);
+var logger = require('../../modules/logging/logger')(module);
 var async = require('async');
 var csv_stream = require('csv-stream');
 
@@ -18,6 +18,8 @@ var csvReadOptionsTicker = {
 
 /*
  * Input: symbol which is stock symbol
+ * Input: start date in format of yyyy-mm-dd
+ * Input: end date in format of yyyy-mm-dd
  * Output and callback:
  * callback will take the historyPriceArray as input  
  * historyPrice.date as date, 
@@ -30,12 +32,18 @@ var csvReadOptionsTicker = {
  * historyPrice.adjClose as adjusted close price,
  */
 
-function queryHistory(symbol, callback){
-	var url = 'http://ichart.finance.yahoo.com/table.csv?s='+ symbol;
+function queryHistory(symbol, start_date, end_date, callback){
+	s_month = parseInt(start_date.substring(5,7))-1;
+	s_day = parseInt(start_date.substring(8,10));
+	s_year = parseInt(start_date.substring(0,4));
+	e_month = parseInt(end_date.substring(5,7))-1;
+	e_day = parseInt(end_date.substring(8,10));
+	e_year = parseInt(end_date.substring(0,4));
+	var url = "http://ichart.finance.yahoo.com/table.csv?s="+ symbol+"&a="+s_month+"&b="+s_day+"&c="+s_year+"&d="+e_month+"&e="+e_day+"&f="+e_year;
 	var historyPriceArray=[];
 	logger.log('info',url);
 	var csvStreamTicker = csv_stream.createStream(csvReadOptionsTicker);
-	request(url).pipe(csvStreamTicker)
+	request(url,{timeout: 60000}).pipe(csvStreamTicker)
 		.on('data', function (oneDayData) {
 			var historyPrice = {
 					date:oneDayData.date,

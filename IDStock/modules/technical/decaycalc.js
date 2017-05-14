@@ -4,7 +4,7 @@
  * 05/14/2016
  */
 var async = require('async');
-var logger = require('./logger')(module);
+var logger = require('../logging/logger')(module);
 
 /*
  * targetArray - take targetArray[i].date as date, take targetArray[i].price as price

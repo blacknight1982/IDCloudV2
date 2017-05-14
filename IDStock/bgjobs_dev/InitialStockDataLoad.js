@@ -128,7 +128,7 @@ async.series({
                             console.log(tickerDataArray);
                             mySQLPool.getConnection(function (err, conn) {
                                 if (err) throw err;
-                                var queryString = 'insert into company_tickers (symbol,date,open,high,low,close,volume,ma5,ma10,ma20,ma60) values ';
+                                var queryString = 'insert into company_basic (symbol,date,open,high,low,close,volume,ma5,ma10,ma20,ma60) values ';
 
 
                                 for (var i = 0, len = tickerDataArray.length; i < len; i++) {

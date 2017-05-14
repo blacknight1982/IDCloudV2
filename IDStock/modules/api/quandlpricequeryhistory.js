@@ -6,7 +6,7 @@
  */
 
 var request = require('request');
-var logger = require('../modules/logger')(module);
+var logger = require('../../modules/logging/logger')(module);
 var async = require('async');
 var csv_stream = require('csv-stream');
 

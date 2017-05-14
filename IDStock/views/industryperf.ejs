@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<script src="/javascripts/earningcalhistory.js"></script>
+<script src="/javascripts/sorttable.js"></script>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+<%include templates/header.ejs%>
+
+<h1>Industry ER Performance (4 month time window by default)</h1>
+
+<table class="sortable">
+    <thead>
+    <tr>
+        <td>Industry</td>
+        <td>Average ER Day Return</td>
+        <td>Z Value</td>
+        <td>Median Value</td>
+        <td>Count of Samples</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% industries.forEach(function(oneIndustry){ %>
+    <tr>
+        <td><a href="/trading/ercalhistory/<%= encodeURIComponent(oneIndustry.industry)%>" target="_blank"><%= oneIndustry.industry %></td>
+        <td><%= oneIndustry.average_return %></td>
+        <td><%= oneIndustry.z_value %></td>
+        <td><%= oneIndustry.median_val %></td>
+        <td><%= oneIndustry.sample_count %></td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+</body>
+</html>

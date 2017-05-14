@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<script src="/javascripts/earningcalhistory.js"></script>
+<script src="/javascripts/sorttable.js"></script>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body onload="bodyOnLoad()">
+<%include templates/header.ejs%>
+
+<h1>Earning Calendar for Industry: <%= industry %></h1>
+
+<table class="sortable">
+    <thead>
+    <tr>
+        <td>Report Date</td>
+        <td>Report Time</td>
+        <td>Symbol</td>
+        <td>Name</td>
+        <td>Sector</td>
+        <td>Market Cap(M)</td>
+        <td>EPS</td>
+        <td>EPS Forecast</td>
+        <td>EPS Surprise</td>
+        <td>Price(ER)</td>
+        <td>Day 1 Price Change%</td>
+        <td>Day 2 Price Change%</td>
+        <td>Two Days Price Change%</td>
+    </tr>
+    </thead>
+    <tbody id="tab_companies_body">
+    <% companyList.forEach(function(oneCompany){ %>
+    <tr>
+        <td><%= oneCompany.rdate %></td>
+        <td><%= oneCompany.erdetails %></td>
+        <td><a href="https://www.zacks.com/stock/chart/<%= oneCompany.symbol %>/price-consensus-eps-surprise-chart %>" target="_blank"><%= oneCompany.symbol %></a></td>
+        <td><%= oneCompany.name %></td>
+        <td><%= oneCompany.sector %></td>
+        <td><%= oneCompany.market_cap %></td>
+        <td><%= oneCompany.eps %></td>
+        <td><%= oneCompany.epsf %></td>
+        <td><%= oneCompany.surprise %></td>
+        <td><%= oneCompany.price_erday %></td>
+        <td name="td_percentday1"><%= oneCompany.percent_day1 %></td>
+        <td name="td_percentday2"><%= oneCompany.percent_day2 %></td>
+        <td name="td_percenttwoday"><%= oneCompany.percent_twoday %></td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+</body>
+</html>

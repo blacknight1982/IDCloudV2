@@ -1,7 +1,6 @@
 /**
  * Created by John Liu on 2/16/2016.
  */
-
 var async = require("async");
 var express = require('express');
 var logger = require('../modules/logging/logger')(module);
@@ -10,14 +9,22 @@ var db = require('../modules/persistence/db');
 var HashTable = require('hashtable');
 
 router.get('/', function (req, res, next) {
-        res.render('ercal', {title: 'IDCloud Trading Tool'});
+        res.render('ercal_ehp', {title: 'IDCloud Trading Tool'});
 });
 
 router.get('/:date', function (req, res, next) {
+	
+	var dateString = req.params.date;
+	var nextDate = new Date(dateString);
+	nextDate.setDate(nextDate.getDate() + 2);
+	var nextDateString = nextDate.toISOString().slice(0,10);
+	logger.log('info',dateString);
+	logger.log('info',nextDateString);
 	var hashtable = new HashTable();
 	var response = {};
 	var resultRows;
-    async.series({
+	
+	async.series({
     	/*
 		 * Step 1 execute query for industry stat
 		 */
@@ -40,7 +47,7 @@ router.get('/:date', function (req, res, next) {
 	     * Step2: Read ER cal and assign industry stat
 	     */
 	    step2: function(cbGlobal){
-	    	var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps,industry_return,z_val,sample_count FROM company_basic_ercal where erdate = '" + req.params.date + "'"
+	    	var queryString = "SELECT symbol,name,market_cap,ipoyear,sector,industry,erdate,erdetails,price,pe,eps,industry_return,z_val,sample_count FROM company_basic_ercal where ((erdate = '" + dateString + "' and erdetails like '%after%') or (erdate = '" + nextDateString + "' and erdetails like '%before%')) and industry_return>=1.5";
 	        logger.log('info',queryString);	
 	    	
 	    	db.get().query(queryString, function(err, rows, fields) {

@@ -3,37 +3,18 @@
  */
 
 function calChange() {
-	//triggerTableRender();
-	triggerTableRender2();
+	triggerTableRender();
 }
+
+
+
 
 function triggerTableRender() {
 	var dateInputElement = document.getElementById("inputCalDate");
 	var vdate = dateInputElement.value.toString();
-	var table = document.getElementById("tab_companies_body");
-	for (var i = 0, row; row = table.rows[i]; i++) {
-		var calCell = row.querySelectorAll('[name=td_erDate]');
-		var calCell2 = row.querySelectorAll('[name=td_currentPrice]');
-		var calCell3 = row.querySelectorAll('[name=td_marketCap]');
-		if ((calCell[0].innerText == vdate)
-				&& (parseFloat(calCell3[0].innerText) > 500)) {
-			row.setAttribute("style", "display:table-row");
-			if (parseFloat(calCell2[0].innerText) > 100) {
-				row.setAttribute("style",
-						"display:table-row;background-color:#E1FFA2");
-			}
-		} else {
-			row.setAttribute("style", "display:none")
-		}
-	}
-}
-
-function triggerTableRender2() {
-	var dateInputElement = document.getElementById("inputCalDate");
-	var vdate = dateInputElement.value.toString();
 	$.ajax({
 		type : "GET",
-		url : "/trading/ercal/"+vdate,
+		url : "/trading/ercalehp/"+vdate,
 		data : "{}",
 		contentType : "application/json; charset=utf-8",
 		dataType : "json",

@@ -12,7 +12,7 @@ var mysql = require('mysql');
 router.get('/', function (req, res, next) {
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    yesterdayString = yesterday.toLocaleDateString().slice(0,10);
+    yesterdayString = yesterday.toISOString().slice(0,10);
 
     console.log(yesterdayString);
 
@@ -32,7 +32,7 @@ router.get('/', function (req, res, next) {
         if (err) throw err;
 
         for (var i in rows) {
-            rows[i].magather_date = rows[i].magather_date.toLocaleString().slice(0,10);
+            rows[i].magather_date = rows[i].magather_date.toISOString().slice(0,10);
         }
 
         res.render('etfindicator', {title: 'ETF Indicator',etfList: rows,yesterday:yesterdayString});

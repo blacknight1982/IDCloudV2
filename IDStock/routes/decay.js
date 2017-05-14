@@ -3,37 +3,22 @@
  */
 
 var express = require('express');
-var mysql = require('mysql');
-var logger = require('../modules/logger')(module);
+var logger = require('../modules/logging/logger')(module);
 var async = require('async');
-var decaycalc = require('../modules/decaycalc');
+var decaycalc = require('../modules/technical/decaycalc');
 var router = express();
-
-var mySQLPool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'ljh123',
-    database: 'idstock'
-});
+var db = require('../modules/persistence/db');
 
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
 	
 	var queryString = "SELECT symbol FROM etf_subject";
-	
-	mySQLPool.getConnection(function (err, conn) {
-        if (err) {
-        	throw err;
+	db.get().query(queryString, function(err, rows, fields) {
+    	if (err) {
+            logger.log('error',err);
         }
-        logger.log('info', queryString);
-        conn.query(queryString, function(err, rows, fields) {
-        	if (err) {
-                logger.log('error',err);
-            }
-        	res.render('decay', {title: 'ETF Decay Calculator',etfs: rows});
-        });
-        conn.release();
+    	res.render('decay', {title: 'ETF Decay Calculator',etfs: rows});
     });
 });
 
@@ -81,22 +66,15 @@ router.post('/', function (req, res, next) {
 			step1:function(cbsteps){
 				var queryString = "SELECT subject, correlation FROM etf_subject where symbol = '"+symbol + "'";
 				logger.log('info',queryString);
-				mySQLPool.getConnection(function (err, conn) {
-			        if (err) {
-			        	throw err;
+				db.get().query(queryString, function(err, rows, fields) {
+		        	if (err) {
+			            logger.log('error',err);
 			        }
-			        logger.log('info', queryString);
-			        conn.query(queryString, function(err, rows, fields) {
-			        	if (err) {
-				            logger.log('error',err);
-				        }
-				    	subject = rows[0].subject;
-				    	correlation = rows[0].correlation;
-				    	response.subjectSymbol = subject;
-				        cbsteps();
-			        });
-			        conn.release();
-			    });
+			    	subject = rows[0].subject;
+			    	correlation = rows[0].correlation;
+			    	response.subjectSymbol = subject;
+			        cbsteps();
+		        });
 			},
 			
 			step2:function(cbsteps){
@@ -107,29 +85,21 @@ router.post('/', function (req, res, next) {
 				if(toDate !== ''){
 					queryString = queryString + " and date <='" + toDate +"'";
 				}
-				mySQLPool.getConnection(function (err, conn) {
-			        if (err) {
-			        	throw err;
+				db.get().query(queryString, function(err, rows, fields) {
+		        	if (err) {
+			            logger.log('error',err);
 			        }
-			        logger.log('info', queryString);
-			        conn.query(queryString, function(err, rows, fields) {
-			        	if (err) {
-				            logger.log('error',err);
-				        }
-				        for(var i=0;i<rows.length;i++){
-				    		var colume = [rows[i].date.toLocaleString().slice(0,10), rows[i].adj_close];
-				    		var dailyValue = {
-				    				date: rows[i].date.toLocaleString().slice(0,10),
-				    				price: rows[i].adj_close
-				    		};
-				    		response.target.push(colume);
-				    		targetArray.push(dailyValue);
-				    	}
-				        cbsteps();
-			        });
-			        conn.release();
-			    });
-			    
+			        for(var i=0;i<rows.length;i++){
+			    		var colume = [rows[i].date.toISOString().slice(0,10), rows[i].adj_close];
+			    		var dailyValue = {
+			    				date: rows[i].date.toISOString().slice(0,10),
+			    				price: rows[i].adj_close
+			    		};
+			    		response.target.push(colume);
+			    		targetArray.push(dailyValue);
+			    	}
+			        cbsteps();
+		        });
 			},
 			
 			step3:function(cbsteps){
@@ -140,19 +110,14 @@ router.post('/', function (req, res, next) {
 				if(toDate !== ''){
 					queryString = queryString + " and date <='" + toDate +"'";
 				}
-				mySQLPool.getConnection(function (err, conn) {
-			        if (err) {
-			        	throw err;
-			        }
-			        logger.log('info', queryString);
-			        conn.query(queryString, function(err, rows, fields) {
+				 db.get().query(queryString, function(err, rows, fields) {
 			        	if (err) {
 				            logger.log('error',err);
 				        }
 				        for(var i=0;i<rows.length;i++){
-				    		var colume = [rows[i].date.toLocaleString().slice(0,10), rows[i].adj_close];
+				    		var colume = [rows[i].date.toISOString().slice(0,10), rows[i].adj_close];
 				    		var dailyValue = {
-				    				date: rows[i].date.toLocaleString().slice(0,10),
+				    				date: rows[i].date.toISOString().slice(0,10),
 				    				price: rows[i].adj_close
 				    		};
 				    		response.subject.push(colume);
@@ -160,8 +125,6 @@ router.post('/', function (req, res, next) {
 				    	}
 				        cbsteps();
 			        });
-			        conn.release();
-			    });
 			},
 			
 			step4:function(cbsteps){
