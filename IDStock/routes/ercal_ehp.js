@@ -16,7 +16,7 @@ router.get('/:date', function (req, res, next) {
 	
 	var dateString = req.params.date;
 	var nextDate = new Date(dateString);
-	nextDate.setDate(nextDate.getDate() + 2);
+	nextDate.setDate(nextDate.getDate() + 1);
 	var nextDateString = nextDate.toISOString().slice(0,10);
 	logger.log('info',dateString);
 	logger.log('info',nextDateString);
