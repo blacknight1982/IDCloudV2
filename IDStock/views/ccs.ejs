@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<script src="/javascripts/earningcalhistory.js"></script>
+<script src="/javascripts/sorttable.js"></script>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<!--
+<body onload="bodyOnLoad()">
+-->
+<%include templates/header.ejs%>
+
+<h1>China Concept Stocks</h1>
+
+<table class="sortable">
+    <thead>
+    <tr>
+        <td>Report Date</td>
+        <td>Report Time</td>
+        <td>Symbol</td>
+        <td>Name</td>
+        <td>Market Cap(M)</td>
+        <td>EPS</td>
+        <td>EPS Forecast</td>
+        <td>EPS Surprise</td>
+        <td>Price(ER)</td>
+        <td>5 days trend before ER</td>
+        <td>Day 1 Price Change%</td>
+        <td>Day 2 Price Change%</td>
+        <td>Two Days Price Change%</td>
+    </tr>
+    </thead>
+    <tbody id="tab_companies_body">
+   
+    <tr>
+        <td></td>
+        <td></td>
+        <td><a href="https://www.zacks.com/stock/chart//price-consensus-eps-surprise-chart %>" target="_blank"></a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td name="td_percentday1"></td>
+        <td name="td_percentday2"></td>
+        <td name="td_percenttwoday"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
