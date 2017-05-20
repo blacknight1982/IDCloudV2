@@ -3,6 +3,7 @@
  */
 var async = require("async");
 var yahoopricequeryhistoryforcompany = require('../modules/api/yahoopricequeryhistoryforcompany');
+var googlepricequeryhistoryforcompany = require('../modules/api/googlepricequeryhistoryforcompany');
 var db = require('../modules/persistence/db');
 var logger = require('../modules/logging/logger')(module);
 	
@@ -11,6 +12,8 @@ var dateToday = new Date();
 var dateTodayString = dateToday.toISOString().slice(0,10);
 dateToday.setDate(dateToday.getDate() - 366);
 var oneYearBeforeString = dateToday.toISOString().slice(0,10);
+dateToday.setDate(dateToday.getDate() - 366);
+var twoYearBeforeString = dateToday.toISOString().slice(0,10);
 	
 var IDStock_UpdateCompanyPriceHistory = function(){
 	
@@ -69,15 +72,15 @@ function queryTickerPriceHistoryIntoDB(cbGlobal){
 	logger.log("info","Entering queryTickerPriceHistoryIntoDB...");
 	async.eachSeries(priceSourceArray,function(eachPriceSource,cbEachPriceSource){
 		
-	yahoopricequeryhistoryforcompany(eachPriceSource.symbol,oneYearBeforeString,dateTodayString, function(historyPriceArray){
+		googlepricequeryhistoryforcompany(eachPriceSource.symbol,twoYearBeforeString,dateTodayString, function(historyPriceArray){
 		
 		setTimeout(function(){
 			var queryString = 'insert into company_price_history (symbol, date, price, volume) values ';
 			for(var i=0;i<historyPriceArray.length;i++){
-				queryString = queryString + "('" + eachPriceSource.symbol + "','" + historyPriceArray[i].date + "'," + historyPriceArray[i].adjClose + "," + historyPriceArray[i].volume + "),";
+				queryString = queryString + "('" + eachPriceSource.symbol + "','" + new Date(historyPriceArray[i].date).toISOString().slice(0,10) + "'," + historyPriceArray[i].adjClose + "," + historyPriceArray[i].volume + "),";
 			}
 			queryString = queryString.substr(0, queryString.length - 1);
-			
+			logger.log('info',queryString);
 			db.get().query(queryString, function (error, results) {
 	            if (error) {
 	                logger.log('error',error);

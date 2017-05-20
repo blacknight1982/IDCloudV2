@@ -9,6 +9,7 @@ var IDStock_UpdateCompanyData = require('./IDStock_UpdateCompanyData');
 var IDStock_UpdateCompanyPriceHistory = require('./IDStock_UpdateCompanyPriceHistory');
 var IDStock_UpdateCompanies = require('./IDStock_UpdateCompanies');
 var IDStock_UpdateERHistoryPrice = require('./IDStock_UpdateERHistoryPrice');
+var IDStock_UpdateLastDayForCompanyPriceHistory = require('./IDStock_UpdateLastDayForCompanyPriceHistory');
 
 var db = require('../modules/persistence/db');
 
@@ -24,7 +25,7 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  //IDStock_UpdateCompanyData();
 		  
 		  //Don't execute
-		  //IDStock_UpdateCompanyPriceHistory();
+		  IDStock_UpdateCompanyPriceHistory();
 		  
 		  //done 05/13
 		  //IDStock_UpdatePriceHistory();
@@ -32,7 +33,10 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  //done 05/13
 		  //IDStock_UpdateERCalendar();
 		  
-		  //done 05/01
-		  IDStock_UpdateERHistoryPrice();
+		  //done 05/13
+		  //IDStock_UpdateERHistoryPrice();
+		  
+		  //
+		  //IDStock_UpdateLastDayForCompanyPriceHistory();
 	  }
 });

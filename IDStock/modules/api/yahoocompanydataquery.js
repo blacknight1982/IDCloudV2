@@ -25,7 +25,7 @@ function query(symbolObjectArray, callback){
 	var csvReadOptions = {
 	    delimiter: ',', // default is ,
 	    endLine: '\n', // default is \n,
-	    columns: ['symbol', 'last_tradingday' ,'price', 'dividend', 'pe', 'eps'], // by default read the first line and use values found as columns
+	    columns: ['symbol', 'last_tradingday' ,'price', 'dividend', 'pe', 'eps','volume'], // by default read the first line and use values found as columns
 	    //escapeChar : '"', // default is an empty string
 	    enclosedChar: '"' // default is an empty string
 	};
@@ -39,7 +39,7 @@ function query(symbolObjectArray, callback){
 		for (var j=200*i;j<200*i+remainElement;j++){
 			url = url + symbolObjectArray[j].symbol +'+';
 		}
-		url=url+'&f=sd1l1yre';
+		url=url+'&f=sd1l1yrev';
 		urls.push(url);
 	}
 	

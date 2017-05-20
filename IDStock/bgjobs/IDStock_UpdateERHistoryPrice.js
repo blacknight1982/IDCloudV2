@@ -5,6 +5,7 @@ var request = require('request');
 var async = require('async');
 var nasdaqercal = require('../modules/api/nasdaqercal');
 var yahoopricequeryhistoryforcompany = require('../modules/api/yahoopricequeryhistoryforcompany');
+var googlepricequeryhistoryforcompany = require('../modules/api/googlepricequeryhistoryforcompany');
 var db = require('../modules/persistence/db');
 var logger = require('../modules/logging/logger')(module);
 
@@ -112,11 +113,11 @@ function queryPriceHistoryIntoDB(cbGlobal){
 		     */
 		    step2: function(cbGlobal2){
 		    	setTimeout(function(){
-			    	yahoopricequeryhistoryforcompany(currentSymbol.symbol,start_date,end_date,function(returnPriceArray){
+		    		googlepricequeryhistoryforcompany(currentSymbol.symbol,start_date,end_date,function(returnPriceArray){
 			    		priceArray = returnPriceArray;
 			    		cbGlobal2();
 			    	});
-		    	},1000);
+		    	},3000);
 
 		    },
 		    
@@ -129,9 +130,12 @@ function queryPriceHistoryIntoDB(cbGlobal){
 		    	try{
 			    	for(var i=0;i<erDates.length;i++){
 			    		for(;j>=0;j--){
-			    			if((erDates[i].rdate.toISOString().slice(0,10) === priceArray[j].date)||
+			    			if((erDates[i].rdate.toISOString().slice(0,10) === new Date(priceArray[j].date).toISOString().slice(0,10))||
 			    			(erDates[i].rdate <= new Date(priceArray[j].date)))
 			    			{
+			    				if(typeof (priceArray[j+1])==='undefined'){
+			    					break;
+			    				}
 			    				var queryString = "UPDATE company_ercal_history set price_preer = "+ priceArray[j+1].close + 
 			    				", open_erday = " + priceArray[j].open +
 			    				", price_erday = " + priceArray[j].close + 
