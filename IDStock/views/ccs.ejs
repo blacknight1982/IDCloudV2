@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<script src="/javascripts/earningcalhistory.js"></script>
+<script src="/javascripts/earningcalhistoryenhanced.js"></script>
 <script src="/javascripts/sorttable.js"></script>
 <html>
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
 </head>
-<!--
+
 <body onload="bodyOnLoad()">
--->
 <%include templates/header.ejs%>
 
 <h1>China Concept Stocks</h1>
@@ -17,37 +16,44 @@
     <thead>
     <tr>
         <td>Report Date</td>
-        <td>Report Time</td>
         <td>Symbol</td>
         <td>Name</td>
+        <td>Industry</td>
         <td>Market Cap(M)</td>
         <td>EPS</td>
         <td>EPS Forecast</td>
         <td>EPS Surprise</td>
-        <td>Price(ER)</td>
-        <td>5 days trend before ER</td>
-        <td>Day 1 Price Change%</td>
-        <td>Day 2 Price Change%</td>
+        <td>Price(Pre5day)</td>
+        <td>Price(Pre4day)</td>
+        <td>Price(Pre3day)</td>
+        <td>Price(Pre2day)</td>
+        <td>Price(Pre1day)</td>
+        <td>Percent Pre5days</td>
+        <td>Price(ER day)</td>
         <td>Two Days Price Change%</td>
     </tr>
     </thead>
     <tbody id="tab_companies_body">
-   
+    <% companyList.forEach(function(oneCompany){ %>
     <tr>
-        <td></td>
-        <td></td>
-        <td><a href="https://www.zacks.com/stock/chart//price-consensus-eps-surprise-chart %>" target="_blank"></a></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td name="td_percentday1"></td>
-        <td name="td_percentday2"></td>
-        <td name="td_percenttwoday"></td>
+        <td><%= oneCompany.rdate %></td>
+        <td><a href="https://www.zacks.com/stock/chart/<%= oneCompany.symbol %>/price-consensus-eps-surprise-chart %>" target="_blank"><%= oneCompany.symbol %></a></td>
+        <td><%= oneCompany.name %></td>
+        <td><%= oneCompany.industry %></td>
+        <td><%= oneCompany.market_cap %></td>
+        <td><%= oneCompany.eps %></td>
+        <td><%= oneCompany.epsf %></td>
+        <td><%= oneCompany.surprise %></td>
+        <td><%= oneCompany.price_preer5 %></td>
+        <td><%= oneCompany.price_preer4 %></td>
+        <td><%= oneCompany.price_preer3 %></td>
+        <td><%= oneCompany.price_preer2 %></td>
+        <td><%= oneCompany.price_preer1 %></td>
+        <td name="td_percentpre5day"><%= oneCompany.percent_pre5day %></td>
+        <td><%= oneCompany.price_erday %></td>
+        <td name="td_percenttwoday"><%= oneCompany.percent_twoday %></td>
     </tr>
+    <% }); %>
     </tbody>
 </table>
 </body>

@@ -24,8 +24,8 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  //done 05/13
 		  //IDStock_UpdateCompanyData();
 		  
-		  //Don't execute
-		  IDStock_UpdateCompanyPriceHistory();
+		  //done 05/19
+		  //IDStock_UpdateCompanyPriceHistory();
 		  
 		  //done 05/13
 		  //IDStock_UpdatePriceHistory();

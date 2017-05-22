@@ -13,8 +13,12 @@ var db = require('./modules/persistence/db');
 var ercal = require('./routes/ercal');
 var ercal_ehp = require('./routes/ercal_ehp');
 var ercalhistory = require('./routes/ercalhistory');
+var contacts = require('./routes/contacts');
 var custom = require('./routes/custom');
 var industryperf = require('./routes/industryperf');
+var ccs = require('./routes/ccs');
+
+var logger = require('./modules/logging/logger')(module);
 
 var app = express();
 
@@ -36,11 +40,13 @@ if ('development' == app.get('env')) {
 }
 
 app.use('/', routes);
+app.use('/contacts', contacts);
 app.use('/trading/ercal', ercal);
 app.use('/trading/ercalehp', ercal_ehp);
 app.use('/trading/decay', decay);
 app.use('/trading/ercalhistory', ercalhistory);
 app.use('/trading/industryperf', industryperf);
+app.use('/trading/ccs', ccs);
 app.use('/trading/custom', custom);
 app.all('/trading/*', accesslog);
 
@@ -49,11 +55,11 @@ app.all('/trading/*', accesslog);
 
 db.connect(db.MODE_PRODUCTION, function(err) {
 	if (err) {
-		console.log('Unable to connect to MySQL.');
-		process.exit(1);
+		logger.log('error','Unable to connect to MySQL.');
+		//process.exit(1);
 	} else {
 		http.createServer(app).listen(app.get('port'), function() {
-			console.log('Express server listening on port ' + app.get('port'));
+			logger.log('info','Express server listening on port ' + app.get('port'));
 		});
 	}
 });
