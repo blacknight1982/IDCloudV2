@@ -40,7 +40,7 @@ router.get('/', function (req, res, next) {
 	     * Step2: read past ER calendar
 	     */
 	    step2: function(cbGlobal){
-	    	var queryString_enhanced = "SELECT rdate, symbol, name, sector, industry, eps, epsf, surprise, " +
+	    	var queryString_enhanced = "SELECT rdate, symbol, name, market_cap, industry, eps, epsf, surprise, " +
 	    			"price_preer5, price_preer4,price_preer3,price_preer2,price_preer1,percent_pre5day, price_erday, price_next, percent_twoday FROM idstock.company_basic_ercal_enhanced where (rdate between DATE_SUB(NOW(), INTERVAL 5 MONTH) and DATE_ADD(NOW(), INTERVAL 2 MONTH)) and china_cs = 1 order by rdate desc";
 	    	logger.log('info',queryString_enhanced);	
 	        db.get().query(queryString_enhanced, function(err, rows, fields) {
