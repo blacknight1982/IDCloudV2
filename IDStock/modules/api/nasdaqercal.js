@@ -67,7 +67,7 @@ function query(symbol, callback){
                 			var values = $(this).text().trim().split('\r\n\t\t');
                 			var ercalHistory ={ }; 
                 			ercalHistory.fQuarter = values[0].trim();
-                			ercalHistory.rDate = new Date(values[1].trim()).toLocaleDateString();
+                			ercalHistory.rDate = new Date(values[1].trim())..toISOString();
                 			ercalHistory.eps = values[2].trim();
                 			ercalHistory.epsf = values[3].trim();
                 			ercalHistory.surprise = values[4].trim();
