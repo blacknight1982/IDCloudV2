@@ -50,7 +50,14 @@ function queryStockPriceIntoDB(cbGlobal){
 		async.eachSeries(symbolObjectArray,
 			function (currentSymbol, cbEachSymbol){
 				var dateToInsert = new Date(currentSymbol.last_tradingday);
-				var dateToInsertString = dateToInsert.toISOString().slice(0,10);
+				var dateToInsertString = '';
+				try{
+					dateToInsertString = dateToInsert.toISOString().slice(0,10);
+            	}
+            	catch(exception){
+            		logger.log('error','update symbol: ' +currentSymbol.symbol+ ' has error: ' + exception);
+            		cbEachSymbol();
+            	}
 				var dateToday = new Date();
 				var dateTodayString = dateToday.toISOString().slice(0,10);
 				//var dividend = currentSymbol.dividend === 'N/A'? 0: currentSymbol.dividend;

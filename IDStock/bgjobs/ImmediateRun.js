@@ -31,7 +31,7 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  //IDStock_UpdatePriceHistory();
 		  
 		  //done 05/13
-		  //IDStock_UpdateERCalendar();
+		  IDStock_UpdateERCalendar();
 		  
 		  //done 05/13
 		  //IDStock_UpdateERHistoryPrice();

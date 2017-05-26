@@ -38,7 +38,14 @@ function query(symbol, callback){
                 	var indexOfColon = dateText.indexOf(':');
                 	var dateString = dateText.substr(indexOfColon+2, 12);
                 	var d = new Date(dateString);
-                    var shortString = d.toLocaleDateString(); 
+                	var shortString = 'Invalid Date';
+                	try{
+                		shortString = d.toISOString();
+                	}
+                	catch(exception){
+                		logger.log('error',exception);
+                		shortString = 'Invalid Date';
+                	}
                     currentSymbol.erDate = shortString; 
                     if(shortString === 'Invalid Date'){
                     	currentSymbol.erDate = '0000-00-00';
