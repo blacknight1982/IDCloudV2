@@ -57,11 +57,12 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  /*
 		   * Runs every Sunday 
 		   * at 00:00:00 AM. It does not run on Monday or Sunday
+		   * Removed, company price history is from IB job
 		   */
-		  var IDStock_UpdateCompanyPriceHistoryJob = new CronJob('00 00 00 * * 7', IDStock_UpdateCompanyPriceHistory, function() {
+		  /*var IDStock_UpdateCompanyPriceHistoryJob = new CronJob('00 00 00 * * 7', IDStock_UpdateCompanyPriceHistory, function() {
 		  	console.log('IDStock_UpdateCompanyPriceHistory job stopped');
 		  }, true
-		  );
+		  );*/
 		  
 		  /*
 		   * Runs every Sunday 

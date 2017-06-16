@@ -10,6 +10,12 @@ var logger = require('../../modules/logging/logger')(module);
 var async = require('async');
 var csv_stream = require('csv-stream');
 
+var csvReadOptionsTicker = {
+		delimiter: ',', // default is ,
+	    endLine: '\n', // default is \n,
+	    //columns: ['date', 'Adj. Open', 'Adj. High', 'Adj. Low', 'Adj. Close', 'Adj. Volume']
+}
+
 /*
  * Input: symbol which is stock symbol
  * Input: start date in format of yyyy-mm-dd
@@ -27,31 +33,25 @@ var csv_stream = require('csv-stream');
  */
 
 function queryHistory(symbol, start_date, end_date, callback){
-	var csvColumns = ['date', 'open', 'high', 'low', 'close', 'volume'];
-
-	var csvReadOptionsTicker = {
-			delimiter: ',', // default is ,
-		    endLine: '\n', // default is \n,
-		    columns: csvColumns
-	}
-	var url = 'https://www.quandl.com/api/v3/datasets/WIKI/'+ symbol + '.csv?start_date='+start_date+'&end_date='+end_date;
+	
+	var url = 'https://www.quandl.com/api/v3/datasets/XNAS/'+ symbol + '.csv?start_date='+start_date+'&end_date='+end_date+'&api_key=y4dzZ4d6MzPVFdwmrycx';
 	var historyPriceArray=[];
 	logger.log('info',url);
 	var csvStreamTicker = csv_stream.createStream(csvReadOptionsTicker);
 	request(url).pipe(csvStreamTicker)
 		.on('data', function (oneDayData) {
 			var historyPrice = {
-						date:oneDayData.date,
-						open:oneDayData.open,
-						high:oneDayData.high,
-						low:oneDayData.low,
-						close:oneDayData.close,
-						volume:oneDayData.volume
+						date:oneDayData.Date,
+						open:oneDayData['Adj. Open'],
+						high:oneDayData['Adj. High'],
+						low:oneDayData['Adj. Low'],
+						adjClose:oneDayData['Adj. Close'],
+						volume:oneDayData['Adj. Volume']
 					};
 			historyPriceArray.push(historyPrice);
         })
         .on('end', function () {  
-        	historyPriceArray.shift();
+        	//historyPriceArray.shift();
         	callback(historyPriceArray);
         })
         .on('error', function (error) {

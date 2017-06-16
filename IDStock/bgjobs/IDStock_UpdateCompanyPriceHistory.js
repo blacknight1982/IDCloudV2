@@ -4,6 +4,7 @@
 var async = require("async");
 var yahoopricequeryhistoryforcompany = require('../modules/api/yahoopricequeryhistoryforcompany');
 var googlepricequeryhistoryforcompany = require('../modules/api/googlepricequeryhistoryforcompany');
+var quandlpricequeryhistoryforcompany = require('../modules/api/quandlpricequeryhistoryforcompany');
 var db = require('../modules/persistence/db');
 var logger = require('../modules/logging/logger')(module);
 	
@@ -87,7 +88,7 @@ function queryTickerPriceHistoryIntoDB(cbGlobal){
 	            }
 	            cbEachPriceSource();
 	        });
-		},1000);
+		},4000);
 		
 	});
 		

@@ -25,13 +25,13 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		  //IDStock_UpdateCompanyData();
 		  
 		  //done 05/19
-		  //IDStock_UpdateCompanyPriceHistory();
+		  IDStock_UpdateCompanyPriceHistory();
 		  
 		  //done 05/13
 		  //IDStock_UpdatePriceHistory();
 		  
 		  //done 05/13
-		  IDStock_UpdateERCalendar();
+		  //IDStock_UpdateERCalendar();
 		  
 		  //done 05/13
 		  //IDStock_UpdateERHistoryPrice();
