@@ -68,10 +68,10 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 		   * Runs every Sunday 
 		   * at 00:00:00 AM. It does not run on Monday or Sunday
 		   */
-		  var IDStock_UpdateERHistoryPriceJob = new CronJob('00 00 03 * * 7', IDStock_UpdateERHistoryPrice, function() {
+		  /*var IDStock_UpdateERHistoryPriceJob = new CronJob('00 00 03 * * 7', IDStock_UpdateERHistoryPrice, function() {
 		  	console.log('IDStock_UpdateERHistoryPrice job stopped');
 		  }, true
-		  );
+		  );*/
 		  
 		  logger.log('info','Scheduler Started!');
 	  }

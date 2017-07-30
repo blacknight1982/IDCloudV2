@@ -19,24 +19,18 @@ db.connect(db.MODE_PRODUCTION, function(err) {
 	    process.exit(1);
 	  } else {
 		  //done 04/30
-		  IDStock_UpdateCompanies();
+		  //IDStock_UpdateCompanies();
 		  
 		  //done 05/13
 		  //IDStock_UpdateCompanyData();
 		  
-		  //done 05/19
-		  //IDStock_UpdateCompanyPriceHistory();
-		  
 		  //done 05/13
 		  //IDStock_UpdatePriceHistory();
 		  
-		  //done 05/13
+		  //done 07/30
 		  //IDStock_UpdateERCalendar();
 		  
-		  //done 05/13
-		  //IDStock_UpdateERHistoryPrice();
-		  
-		  //
+		  //done 07/29
 		  //IDStock_UpdateLastDayForCompanyPriceHistory();
 	  }
 });

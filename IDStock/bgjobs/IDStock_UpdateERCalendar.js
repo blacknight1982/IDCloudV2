@@ -60,7 +60,7 @@ function queryEarningCalIntoDB(cbGlobal){
 						var queryStringForecast = "insert into company_earning_cal (symbol, erdate, erdetails, last_update) values ('"+erResult.forecast.symbolName+"','"+erResult.forecast.erDate+"','"+erResult.forecast.erDetails+"','"+dateTodayString+"')" 
 			            + " ON DUPLICATE KEY UPDATE erdate = '"+erResult.forecast.erDate + "', erdetails = '"+erResult.forecast.erDetails+"', last_update = '"+dateTodayString + "'";
 						logger.log('info',queryStringForecast);
-						var queryStringHistory = "insert into company_ercal_history (symbol, fquarter, rdate, eps, epsf, surprise) values ";
+						var queryStringHistory = "insert into company_ercal_enhanced (symbol, fquarter, rdate, eps, epsf, surprise) values ";
 		                						
 						if(erResult.history.length>0){
 							for(i=0;i<erResult.history.length;i++){
