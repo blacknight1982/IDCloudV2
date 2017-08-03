@@ -20,7 +20,7 @@ router.get('/:industry', function (req, res, next) {
 		 */
 	    step1: function(cbGlobal){
 	        
-	    	var queryString_future = "SELECT erdate, symbol,name,sector,market_cap,price,eps,erdetails FROM company_basic_ercal where erdate between NOW() and DATE_ADD(NOW(), INTERVAL 1 MONTH) and erdate <> '0000-00-00' and industry = '" + req.params.industry  +"' order by erdate desc";
+	    	var queryString_future = "SELECT erdate, symbol,name,sector,market_cap,price,eps,erdetails FROM company_basic_ercal where erdate between DATE_SUB(NOW(), INTERVAL 1 DAY) and DATE_ADD(NOW(), INTERVAL 1 MONTH) and erdate <> '0000-00-00' and industry = '" + req.params.industry  +"' order by erdate desc";
 	    	logger.log('info',queryString_future);	
 	    	db.get().query(queryString_future, function(err, rows, fields) {
 	            if (err) throw err;
